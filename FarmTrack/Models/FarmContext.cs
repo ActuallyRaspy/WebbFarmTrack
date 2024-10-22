@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FarmTrack.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace FarmTrack.Models
 {
