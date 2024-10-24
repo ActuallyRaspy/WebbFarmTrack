@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - FarmTrack</title>
+    <link rel="stylesheet" href="site.css" />
+    <link rel="icon" href="planting.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="farmtrack-header">
+        <img class="logo" src="planting.png">
+        <div class="title">FarmTrack</div>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="#">Schedule</a></li>
+                <li><a href="#">Tracker</a></li>
+                <li><a href="#">Analysis</a></li>
+                <li><a href="#">Alerts</a></li>
+            </ul>
+        </nav>
+        <div class="user-section">
+          <img src="https://via.placeholder.com/40" alt="User" class="user-icon">
+          <div class="user-details">
+          <span class="user-name">Användare</span>
+          <a href="#" class="logout-button">Log out</a>
+        </div>  
+      </div>
+    </header>
+
+    <!-- Submenu Section -->
+    <section class="submenu-section">
+        <div class="submenu">Submeny1</div>
+        <div class="submenu">Submeny2</div>
+    </section>
+
+
+    <main class="tracker-content">
+        <div class="tracker-form-wrapper">
+            <section class="tracker-form-section">
+                <h2>Create a new crop</h2>
+                <form id="crop-create-form">
+                    <div class="form-row">
+                        <label for="crop-name">Crop name</label>
+                        <input type="text" id="crop-name" placeholder="Crop name">
+                    </div>
+                    
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="planting-season-warm">Planting season (Warm climate)</label>
+                            <input type="text" id="planting-season-warm" placeholder="Jan-June">
+                        </div>
+                        <div>
+                            <label for="planting-season-cold">Planting season (Cold climate)</label>
+                            <input type="text" id="planting-season-cold" placeholder="Aug-Dec">
+                        </div>
+                    </div>
+
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="harvesting-season-warm">Harvesting season (Warm climate)</label>
+                            <input type="text" id="harvesting-season-warm" placeholder="Jan-June">
+                        </div>
+                        <div>
+                            <label for="harvesting-season-cold">Harvesting season (Cold climate)</label>
+                            <input type="text" id="harvesting-season-cold" placeholder="Aug-Dec">
+                        </div>
+                    </div>
+
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="days-to-grow">Days to grow</label>
+                            <input type="number" id="days-to-grow" placeholder="100">
+                        </div>
+                    </div>
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="description">Description</label>
+                            <input type="text" id="description" placeholder="Wet earth, 2cm deep.">
+                        </div>
+                    </div>
+
+                    <button type="button" id="create-crop-btn">Create crop</button>
+                </form>
+            </section>
+
+            <section class="tracker-form-section">
+                <h2>Track a new crop</h2>
+                <form id="crop-track-form">
+                    <div class="form-row">
+                        <label for="farm-name">Farm name</label>
+                        <input type="text" id="farm-name" placeholder="Farm name">
+                    </div>
+                    
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="crop-name">Crop</label>
+                            <select id="crop-name" name="">
+                                <!-- Fill by reading in the crops in the database-->
+                            </select>
+                        </div>
+                        <div>
+                            <label for="amount">Amount (plants)</label>
+                            <input type="number" id="amount" placeholder="Amount">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="plant-date">Plant date</label>
+                            <input type="date" id="plant-date">
+                        </div>
+                        <div>
+                            <label for="harvest-date">Harvest date</label>
+                            <input type="date" id="harvest-date">
+                        </div>
+                    </div>
+            
+                    <button type="button" id="addCropBtn">Add crop</button>
+                </form>
+            </section>
+        </div>
+    
+        <section class="tracker-table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Farm</th>
+                        <th>Crop</th>
+                        <th>Amount</th>
+                        <th>Plant date</th>
+                        <th>Harvest date</th>
+                        <th>Time left</th>
+                        <th>Harvest alert</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="farm-data-table">
+                    <!-- New rows will be added here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="farmtrack-footer">
+        <p>Developed by Simon & Nasera</p>
+    </footer>
+</body>
+</html>
