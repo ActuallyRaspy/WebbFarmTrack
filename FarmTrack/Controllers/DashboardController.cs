@@ -22,31 +22,24 @@ namespace FarmTrack.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(string name, int numTimes = 1)
+        public IActionResult Index(string name)
         {
-            ViewData["message"] = "Hello " + name;
-            ViewData["numTimes"] = numTimes;
+            ViewData["username"] = "Placeholder" + name;
             return View();
         }
 
-        public IActionResult Dashboard(string name, int numTimes = 1)
-        {
-            ViewData["message"] = "Hello " + name;
-            ViewData["numTimes"] = numTimes;
-            return View();
-        }
 
         public IActionResult Analysis()
         {
             return View();
         }
 
-        public IActionResult Harvest()
+        public IActionResult Tracker()
         {
             return View();
         }
 
-        public IActionResult Sowing()
+        public IActionResult Alert()
         {
             return View();
         }

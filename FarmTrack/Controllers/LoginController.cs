@@ -20,13 +20,6 @@ namespace FarmTrack.Controllers
             return View();
         }
 
-        public IActionResult Dashboard(string name, int numTimes = 1)
-        {
-            ViewData["message"] = "Hello " + name;
-            ViewData["numTimes"] = numTimes;
-            return View();
-        }
-
         public IActionResult Analysis()
         {
             return View();
@@ -45,6 +38,12 @@ namespace FarmTrack.Controllers
         public IActionResult Login()
         {
             return View();
+        }
+
+        public bool validateLogin(string username, string password)
+        {
+
+            return false;
         }
     }
 }

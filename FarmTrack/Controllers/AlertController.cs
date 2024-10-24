@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace FarmTrack.Controllers
 {
-    public class HarvestController : Controller
+    public class AlertController : Controller
     {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -15,15 +15,9 @@ namespace FarmTrack.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Index(string name, int numTimes = 1)
+        public IActionResult Index(string name)
         {
-            return View();
-        }
-
-        public IActionResult Dashboard(string name, int numTimes = 1)
-        {
-            ViewData["message"] = "Hello " + name;
-            ViewData["numTimes"] = numTimes;
+            ViewData["username"] = "Placeholder" + name;
             return View();
         }
 
@@ -32,12 +26,12 @@ namespace FarmTrack.Controllers
             return View();
         }
 
-        public IActionResult Harvest()
+        public IActionResult Tracker()
         {
             return View();
         }
 
-        public IActionResult Sowing()
+        public IActionResult Alert()
         {
             return View();
         }

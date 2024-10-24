@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Sowing";
+}
+<div class="tracker-content">
+    <div class="tracker-form-wrapper">
+        <section class="tracker-form-section">
+            <h2>Create a new alert</h2>
+            <form id="alert-form">
+                <div class="form-row">
+                    <label for="farm-name">Alert name</label>
+                    <input type="text" id="alert-name" placeholder="Alert name">
+                </div>
+
+                <div class="form-row-pair">
+                    <div>
+                        <label for="alert-description">Description</label>
+                        <input type="text" id="alert-description" placeholder="Water, fertilize">
+                    </div>
+                    <div>
+                        <label for="alert-date">Alert date</label>
+                        <input type="date" id="alert-date">
+                    </div>
+                </div>
+                <button type="button" id="create-alert-btn">Add alert</button>
+            </form>
+        </section>
+    </div>
+
+    <section class="tracker-table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Alert name</th>
+                    <th>Description</th>
+                    <th>Alert date</th>
+                    <th>Days left</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody id="alert-data-table">
+                <!-- New rows will be added here -->
+            </tbody>
+        </table>
+    </section>
+</div>

@@ -4,28 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - FarmTrack</title>
-    <link rel="stylesheet" href="FarmTrackWeb/site.css" />
-    <link rel="icon" href="FarmTrackWeb/planting.png" type="image/png">
+    <link rel="stylesheet" href="~/FarmTrackWeb/site.css" />
+    <link rel="icon" href="~/FarmTrackWeb/planting.png" type="image/png">
 </head>
 <body>
     <!-- Header -->
     <header class="farmtrack-header">
-        <img class="logo" src="planting.png">
+        <img class="logo" src="~/FarmTrackWeb/planting.png">
         <div class="title">FarmTrack</div>
         <nav class="main-menu">
             <ul>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Harvest" asp-action="Harvest">Harvest tracking</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Sowing" asp-action="Sowing">Sowing Schedule</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Analysis" asp-action="Analysis">Analysis</a>
-                </li>
+                <li><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                <li><a asp-controller="Tracker" asp-action="Tracker">Tracking</a></li>
+                <li><a asp-controller="Alert" asp-action="Alert">Alerts</a></li>
+                <li><a asp-controller="Analysis" asp-action="Analysis">Analysis</a></li>
             </ul>
         </nav>
 
@@ -57,7 +49,7 @@
         <p>Developed by Simon & Nasera</p>
     </footer>
 
-    <script src="FarmTrackWeb/layout.js"></script>
+    <script src="~/FarmTrackWeb/layout.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

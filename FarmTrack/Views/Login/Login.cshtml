@@ -1,11 +1,49 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
     ViewData["Title"] = "Login";
 }
-<h1 class="text-center">Login page!</h1>
+<div class="login-content">
+        <div class="login-wrapper" id="login-wrapper">
+            <section class="tracker-form-section">
+                <h2>Login</h2>
+                <form id="login-form">
+                    <div class="form-row">
+                        <label for="login-user-name">Username</label>
+                        <input type="text" id="login-user-name" placeholder="Username">
+                    </div>
+                    <div class="form-row">
+                        <label for="login-user-password">Password</label>
+                        <input type="password" id="login-user-password" placeholder="Password">
+                    </div>
+                    <div class="form-row" id="form-row-button">
+                        <button type="button" id="register-page-btn" onclick="showRegister()">Create account</button>
+                        <button type="button" id="login-btn">Login</button>
+                    </div>
+                </form>
+            </section>
+        </div>
 
-<p>Things and stuff!!</p>
+        <div class="register-wrapper" id="register-wrapper">
+            <section class="tracker-form-section">
+                <h2>Register an account</h2>
+                <form id="register-form">
+                    <div class="form-row">
+                        <label for="register-user-name">Username</label>
+                        <input type="text" id="register-user-name" placeholder="Username">
+                    </div>
+                    <div class="form-row">
+                        <label for="register-user-password">Password</label>
+                        <input type="password" id="register-user-password" placeholder="Password">
+                    </div>
+                    <div class="form-row">
+                        <label for="register-user-password-confirm">Confirm password</label>
+                        <input type="password" id="register-user-password-confirm" placeholder="Password">
+                    </div>
 
-
+                    <div class="form-row" id="form-row-button">
+                        <button type="button" id="register-page-btn" onclick="showLogin()">Back</button>
+                        <button type="button" id="login-btn">Register</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+    </div>
