@@ -10,7 +10,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<FarmContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+
+
+// Add cookie policy globally
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.None; // Cross-site cookies allowed
+    options.Secure = CookieSecurePolicy.Always; // Enforce HTTPS for cookies
+});
+
 var app = builder.Build();
+
 
 // Se till att databasen skapas om den inte redan finns
 using (var scope = app.Services.CreateScope())
@@ -31,10 +41,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
+    pattern: "{controller=Login}/{action=Login}/{id?}");
 
 app.Run();

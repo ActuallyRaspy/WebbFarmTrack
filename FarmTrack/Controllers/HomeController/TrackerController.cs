@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Xml.Linq;
 
-namespace FarmTrack.Controllers
+namespace FarmTrack.Controllers.HomeController
 {
-    public class AnalysisController : Controller
+    public class TrackerController : Controller
     {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -20,6 +20,14 @@ namespace FarmTrack.Controllers
             ViewData["username"] = "Placeholder" + name;
             return View();
         }
+
+        public IActionResult Dashboard(string name, int numTimes = 1)
+        {
+            ViewData["message"] = "Hello " + name;
+            ViewData["numTimes"] = numTimes;
+            return View();
+        }
+
 
         public IActionResult Analysis()
         {

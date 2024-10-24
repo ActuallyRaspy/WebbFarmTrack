@@ -2,17 +2,18 @@
 {
     public class Validation
     {
-        public bool validateLogin(string username, string password)
+        public bool validateLogin(string username, string password, FarmContext _context)
         {
-            if (username == null || password == null)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
             {
-                return false;
+                return false; // Om någon av fälten är tomma
             }
 
-            if (true)//if( user.findUser(username).username == user && user.findUser(password) == password) 
-            {
-                return true;
-            }
+            // Hitta användaren i databasen
+            var user = _context.Users.FirstOrDefault(u => u.Username == username && u.Password == password);
+
+            // Returnera true om användaren finns och lösenordet matchar
+            return user != null;
         }
     }
 }
