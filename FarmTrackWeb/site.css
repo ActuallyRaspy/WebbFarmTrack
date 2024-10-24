@@ -7,15 +7,15 @@ body {
     margin: 0;
     font-family: Times, serif, 'Times New Roman', Times, serif, sans-serif;
     background-color: #ffffff;
+    height: 100%;
 }
 
 .farmtrack-header {
     display: grid;
-    grid-template-columns: 3fr 2fr 2fr; /* Three sections: logo, menu, user section */
+    grid-template-columns: 0.1fr 1fr 2fr 2fr; /* 4 sections: logo, title, menu, user section */
     align-items: center;
     background-color: #599149; /* Dark green */
     height: 60px;
-    padding: 0;
     color: white;
 }
 
@@ -25,25 +25,25 @@ body {
     height: 100%; /* Ensure consistent height */
 }
 
-.farmtrack-header .logo {
+.farmtrack-header .title {
     padding-left: 20px;
-    font-size: 2.7em;
-    border-right: 0.5px solid white; /* White divider between FarmTrack and Schedule */
+    font-size: 2.7em;    
+    border-right: 1px solid white; /* Create the "screen" effect between rubriker */
+}
+.logo {
+    height: 45px;
+    margin-left: 5px;
 }
 
 .main-menu ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
     display: grid;
     grid-template-columns: repeat(4, 120px);
-    height: 100%; /* Four equal columns for the rubriker */
-    
+    height: 100%; /* Four equal columns for the rubriker */    
 }
 
 .main-menu ul li {
     background-color: #599149;
-    border-right: 0.5px solid white; /* Create the "screen" effect between rubriker */
+    border-right: 1px solid white; /* Create the "screen" effect between rubriker */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -186,39 +186,8 @@ body {
     position: fixed;
     width: 100%;
     bottom: 0;
-
 }
 
-
-
-.tracker-form-section {
-    max-width: 25% !important;
-    width: 25% !important; /* More compact width */
-    background-color: #e7f7e2;
-    padding: 15px;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin-left: 5px; /* Space from the right wall */
-    margin-top: 3px; /* Space from the top */
-    height: auto;
-    overflow: hidden; /* Ensure nothing overflows the container */
-   
-    
-}
-
-.tracker-form-section h2 {
-    padding-bottom: 15px;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-    font-size: 2em;
-    margin-top: 0;
-    
-}
-/* Adjust Farm name input width to match the other fields */
-.tracker-form-section input#farm-name {
-    width: 38.5%; /* Set the width to match the other input fields */
-}
 /* Adjust spacing between form rows */
 .form-row-pair {
     display: flex;
@@ -228,6 +197,49 @@ body {
 
 .form-row-pair div {
     width: 48%; /* Each field takes half of the available space */
+}
+
+#create-crop-btn{
+    width: 80px;
+}
+
+#description{
+    width: 275px;
+}
+
+/* Tracker page*/
+
+.tracker-content {
+    display: flex;               /* Gör innehållet flexibelt för horisontell layout */
+    justify-content: flex-start;  /* Starta från vänster, placerar form till vänster */
+    align-items: flex-start;      /* Rikta sektionerna uppifrån och ner */
+    gap: 20px;                    /* Lägg till mellanrum mellan form och tabell */
+}
+
+.tracker-form-wrapper{
+    display:flex;
+    flex-direction: column;
+    width: 25%;    
+    min-width: 350px;
+}
+
+.tracker-form-section {
+    background-color: #e7f7e2;
+    padding: 15px;
+    border: 1px solid #599149;
+    border-radius: 5px;
+    margin-left: 15px; /* Space from the right wall */
+    margin-top: 15px; /* Space from the top */
+    overflow: hidden; /* Ensure nothing overflows the container */
+}
+
+.tracker-form-section h2 {
+    padding-bottom: 15px;
+    font-weight: bold;
+    color: #333;
+    text-align: left;
+    font-size: 2em;
+    margin-top: 0;
 }
 
 .tracker-form-section label {
@@ -252,6 +264,7 @@ body {
     color: black;
     border-radius: 5px;
     font-size: 0.8em;
+    border: 1px solid #020800;
     cursor: pointer;
     margin-top: 5px;
     margin-left: auto; /* Ensure the button is aligned to the right */
@@ -259,25 +272,16 @@ body {
 }
 
 .tracker-form-section button:hover {
-    background-color: #4e7e40;
-}
-
-
-.tracker-table-section {
-    width: 60%;
-    background-color: #e7f7e2;
-    padding: 15px;
-    border: 1px solid #aad09f;
-    border-radius: 5px;
-    min-height: 500px; /* Ensure that the table section takes more height */
-   
+    background-color: #aad09f;
 }
 
 .tracker-table-section {
     width: 70%;
+    margin-top: 15px;
+    margin-right: 15px;
     background-color: #e7f7e2;
     padding: 15px;
-    border: 1px solid #aad09f;
+    border: 1px solid #599149;
     border-radius: 5px;
     min-height: 500px; /* Ensure that the table section takes more height */
     box-sizing: border-box;
@@ -290,8 +294,26 @@ body {
     height: 100%; /* Ensure table fills the available height */
 }
 
+.tracker-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.tracker-remove-btn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.tracker-remove-btn:hover {
+    background-color: #d32f2f;
+}
+
 .tracker-table-section th, .tracker-table-section td {
-    border: 1px solid #aad09f; /* Add border to match the design */
+    border: 1px solid #599149; /* Add border to match the design */
     padding: 20px 10px; /* Increase padding for taller rows */
     text-align: left;
     font-size: 1em;
@@ -327,45 +349,81 @@ body {
 }
 
 
-.tracker-table-section th, .tracker-table-section td {
-    border: 1px solid #aad09f; /* Add border to match the design */
-    padding: 20px 10px; /* Increase padding for taller rows */
-    text-align: left;
-    font-size: 1em;
-    color: black;
-}
+/* Analysis page*/
 
-.tracker-table-section th {
-    font-weight: bold;
-    text-align: left;
-}
-
-.tracker-table-section td {
-    height: 60px; /* Ensure each row has a minimum height */
-    color: #333;
-}
-
-.tracker-checkbox {
-    width: 20px;
-    height: 20px;
-}
-
-.tracker-remove-btn {
-    background-color: #f44336;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-}
-
-.tracker-remove-btn:hover {
-    background-color: #d32f2f;
-}
-
-.tracker-content {
+.analysis-content{
     display: flex;               /* Gör innehållet flexibelt för horisontell layout */
     justify-content: flex-start;  /* Starta från vänster, placerar form till vänster */
     align-items: flex-start;      /* Rikta sektionerna uppifrån och ner */
-    gap: 20px;                    /* Lägg till mellanrum mellan form och tabell */
+    gap: 20px;   
+}
+
+.analysis-table-section{
+    width: 70%;
+    margin-top: 15px;
+    margin-left: 15px;
+    background-color: #e7f7e2;
+    padding: 15px;
+    border: 1px solid #aad09f;
+    border-radius: 5px;
+    min-height: 500px; /* Ensure that the table section takes more height */
+    box-sizing: border-box;
+}
+
+.analysis-table-section table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #e7f7e2;
+    height: 100%; /* Ensure table fills the available height */
+}
+
+.analysis-table-section th, .analysis-table-section td {
+    border: 1px solid #aad09f; /* Add border to match the design */
+    padding: 20px 10px; /* Increase padding for taller rows */
+    text-align: left;
+    font-size: 1em;
+    color: black;
+}
+
+.analysis-table-section th {
+    font-weight: bold;
+    text-align: left;
+}
+
+.analysis-table-section td {
+    height: 60px; /* Ensure each row has a minimum height */
+    color: #333;
+}
+
+/* Login & register page */
+
+.login-content{
+    height: 90vh;
+    display: flex;               /* Gör innehållet flexibelt för horisontell layout */
+    justify-content: center;  /* Starta från vänster, placerar form till vänster */
+    align-items: center;   
+}
+
+.login-form-section{
+    background-color: gold;
+    width: 40%;
+    height: 40%;
+    display: flex;
+}
+
+.login-wrapper{
+    display:block;
+}
+
+.register-wrapper{
+    display:none;
+}
+
+#form-row-button{
+    display: flex;
+}
+
+#register-page-btn{
+    margin-left: 0;
+    width: 100px;
 }

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - FarmTrack</title>
+    <link rel="stylesheet" href="site.css" />
+    <link rel="icon" href="planting.png" type="image/png">
+</head>
+<body>
+    <!-- Header -->
+    <header class="farmtrack-header">
+        <img class="logo" src="planting.png">
+        <div class="title">FarmTrack</div>
+        <nav class="main-menu">
+            <ul>
+                <li><a href="#">Schedule</a></li>
+                <li><a href="#">Tracker</a></li>
+                <li><a href="#">Analysis</a></li>
+                <li><a href="#">Alerts</a></li>
+            </ul>
+        </nav>
+        <div class="user-section">
+          <img src="https://via.placeholder.com/40" alt="User" class="user-icon">
+          <div class="user-details">
+          <span class="user-name">Användare</span>
+          <a href="#" class="logout-button">Log out</a>
+        </div>  
+      </div>
+    </header>
+
+    <!-- Submenu Section -->
+    <section class="submenu-section">
+        <div class="submenu">Submeny1</div>
+        <div class="submenu">Submeny2</div>
+    </section>
+
+    <!-- Main Content Area -->
+    <main class="tracker-content">
+        <div class="tracker-form-wrapper">
+            <section class="tracker-form-section">
+                <h2>Create a new alert</h2>
+                <form id="alert-form">
+                    <div class="form-row">
+                        <label for="farm-name">Alert name</label>
+                        <input type="text" id="alert-name" placeholder="Alert name">
+                    </div>
+                    
+                    <div class="form-row-pair">
+                        <div>
+                            <label for="alert-description">Description</label>
+                            <input type="text" id="alert-description" placeholder="Water, fertilize">
+                        </div>
+                        <div>
+                            <label for="alert-date">Alert date</label>
+                            <input type="date" id="alert-date">
+                        </div>
+                    </div>
+                    <button type="button" id="create-alert-btn">Add alert</button>
+                </form>
+            </section>
+        </div>
+    
+        <section class="tracker-table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Alert name</th>
+                        <th>Description</th>
+                        <th>Alert date</th>
+                        <th>Days left</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody id="alert-data-table">
+                    <!-- New rows will be added here -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="farmtrack-footer">
+        <p>Developed by Simon & Nasera</p>
+    </footer>
+
+</body>
+</html>

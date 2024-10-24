@@ -1,4 +1,4 @@
-document.getElementById('addCropBtn').addEventListener('click', function () {
+document.getElementById('crop-track-form').addEventListener('click', function () {
   // Hämta värden från formuläret
   const farmName = document.getElementById('farm-name').value;
   const cropName = document.getElementById('crop-name').value;
@@ -13,7 +13,7 @@ document.getElementById('addCropBtn').addEventListener('click', function () {
   }
 
   // Skapa en ny rad i tabellen
-  const table = document.getElementById('farmDataTable');
+  const table = document.getElementById('farm-data-table');
   const newRow = table.insertRow();
 
   // Fyll den nya raden med data
