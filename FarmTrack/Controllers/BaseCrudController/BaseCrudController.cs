@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FarmTrack.Models.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 
 public abstract class BaseCrudController<TEntity, TContext> : Controller
     where TEntity : class
@@ -15,22 +17,47 @@ public abstract class BaseCrudController<TEntity, TContext> : Controller
     // READ (Index) - Returnerar JSON med alla entiteter
     public virtual async Task<IActionResult> Index()
     {
-        var entities = await _context.Set<TEntity>().ToListAsync();
-        return Ok(entities); // Returnerar JSON-data istället för att rendera en vy
+        try
+        {
+            var entities = await _context.Set<TEntity>().ToListAsync();
+            return Ok(entities); // Returnerar JSON-data
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
     }
 
     // CREATE - Returnerar ett statusmeddelande utan vy-rendering
     [HttpPost]
-    public virtual async Task<IActionResult> Create([FromBody] TEntity entity) // Använd FromBody för att få data från en API-request
+    public virtual async Task<IActionResult> Create([FromBody] Crop crop)
     {
+        // Logga mottagen data
+        Console.WriteLine($"Received crop data: CropName={crop?.CropName}, DaysToGrow={crop?.DaysToGrow}");
+
+        if (crop == null)
+        {
+            return BadRequest(new { error = "Crop data is null." });
+        }
+
         if (ModelState.IsValid)
         {
-            _context.Add(entity);
+            _context.Set<Crop>().Add(crop);
             await _context.SaveChangesAsync();
-            return Ok(new { message = "Entity created successfully" }); // Returnera JSON eller status
+            return Ok(new { message = "Entity created successfully" });
         }
-        return BadRequest(new { error = "Invalid data" });
+
+        // Logga ModelState-fel
+        var errors = ModelState.Values.SelectMany(v => v.Errors)
+                                      .Select(e => e.ErrorMessage)
+                                      .ToList();
+        Console.WriteLine($"ModelState errors: {string.Join(", ", errors)}"); // Logga eventuella fel
+        return BadRequest(new { error = "Invalid data", details = errors });
     }
+
+
+
+
 
     // UPDATE - Returnerar ett statusmeddelande utan vy-rendering
     [HttpPost]

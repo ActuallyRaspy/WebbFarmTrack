@@ -15,8 +15,8 @@ builder.Services.AddDbContext<FarmContext>(options =>
 // Add cookie policy globally
 builder.Services.Configure<CookiePolicyOptions>(options =>
 {
-    options.MinimumSameSitePolicy = SameSiteMode.None; // Cross-site cookies allowed
-    options.Secure = CookieSecurePolicy.Always; // Enforce HTTPS for cookies
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+    options.Secure = CookieSecurePolicy.SameAsRequest; // Tillåt både HTTP och HTTPS
 });
 
 var app = builder.Build();

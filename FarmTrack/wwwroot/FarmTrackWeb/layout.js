@@ -1,55 +1,62 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Check if the element exists before adding the event listener
-    const cropTrackForm = document.getElementById('crop-track-form');
-    if (cropTrackForm) {
-        cropTrackForm.addEventListener('click', function () {
-            // Hämta värden från formuläret
-            const farmName = document.getElementById('farm-name').value;
-            const cropName = document.getElementById('crop-name').value;
-            const amount = document.getElementById('amount').value;
-            const plantDate = document.getElementById('plant-date').value;
-            const harvestDate = document.getElementById('harvest-date').value;
-
-            // Kontrollera att alla fält är ifyllda
-            if (!farmName || !cropName || !amount || !plantDate || !harvestDate) {
-                alert('Please fill out all fields.');
-                return;
-            }
-
-            // Skapa en ny rad i tabellen
-            const table = document.getElementById('farm-data-table');
-            const newRow = table.insertRow();
-
-            // Fyll den nya raden med data
-            newRow.innerHTML = `
-                <td>${farmName}</td>
-                <td>${cropName}</td>
-                <td>${amount}</td>
-                <td>${plantDate}</td>
-                <td>${harvestDate}</td>
-                <td>Time left (calculate later)</td>
-                <td><input type="checkbox" class="tracker-checkbox"></td>
-                <td><button class="tracker-remove-btn">✖</button></td>
-            `;
-
-            // Lägg till en funktion för att ta bort raden
-            newRow.querySelector('.tracker-remove-btn').addEventListener('click', function () {
-                newRow.remove();
+    // Hämta crops och fyll dropdown-menyn
+    fetch('/CropManagement/Index')
+        .then(response => response.json())
+        .then(data => {
+            const dropdown = document.getElementById("crop-name");
+            data.forEach(crop => {
+                let option = document.createElement("option");
+                option.value = crop.cropId;
+                option.text = crop.cropName;
+                dropdown.appendChild(option);
             });
+        })
+        .catch(error => console.error('Error fetching crops:', error));
 
-            // Rensa formuläret efter att uppgifterna har lagts till
-            document.getElementById('cropForm').reset();
+    // Kontrollera att knappen "Create crop" triggas
+    const createCropButton = document.getElementById('create-crop-btn');
+    if (createCropButton) {
+        createCropButton.addEventListener('click', function () {
+            console.log("Create crop button clicked!");
+
+            // Samla in värden från formuläret
+            const cropName = document.getElementById('crop-name').value;
+            const plantingSeasonWarm = document.getElementById('planting-season-warm').value;
+            const plantingSeasonCold = document.getElementById('planting-season-cold').value;
+            const harvestingSeasonWarm = document.getElementById('harvesting-season-warm').value;
+            const harvestingSeasonCold = document.getElementById('harvesting-season-cold').value;
+            const daysToGrow = document.getElementById('days-to-grow').value;
+            const description = document.getElementById('description').value;
+
+            // Skapa ett objekt med all data
+            const cropData = {
+                cropName: cropName,
+                plantingSeasonWarm: plantingSeasonWarm,
+                plantingSeasonCold: plantingSeasonCold,
+                harvestingSeasonWarm: harvestingSeasonWarm,
+                harvestingSeasonCold: harvestingSeasonCold,
+                daysToGrow: parseInt(daysToGrow),
+                cropDescription: description
+            };
+
+            console.log("Sending crop data:", JSON.stringify(cropData));
+            // Skicka POST-förfrågan till servern för att skapa en crop
+            fetch('/CropManagement/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cropData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Crop created successfully!");
+                        // Här kan du lägga till kod för att visa ett meddelande eller ladda om sidan
+                    } else {
+                        console.error('Failed to create crop:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error creating crop:', error));
         });
     }
 });
-
-function showRegister() {
-    document.getElementById("login-wrapper").style.display = "none";
-    document.getElementById("register-wrapper").style.display = "block";
-}
-
-function showLogin() {
-    document.getElementById("login-wrapper").style.display = "block";
-    document.getElementById("register-wrapper").style.display = "none";
-}
-
