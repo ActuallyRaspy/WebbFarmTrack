@@ -13,6 +13,9 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error fetching crops:', error));
 
+
+    
+
     // Kontrollera att knappen "Create crop" triggas
     const createCropButton = document.getElementById('create-crop-btn');
     if (createCropButton) {
@@ -60,3 +63,15 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+function hideRegister() {
+    console.log("Hide register button clicked!");
+    document.getElementById('register-wrapper').style.display = "none";
+    document.getElementById('login-wrapper').style.display = "block";
+}
+
+function hideLogin() {
+    console.log("Hide login button clicked!");
+    document.getElementById('login-wrapper').style.display = "none";
+    document.getElementById('register-wrapper').style.display = "block";
+}

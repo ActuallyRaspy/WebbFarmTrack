@@ -1,4 +1,6 @@
-﻿namespace FarmTrack.Models.Entities
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace FarmTrack.Models.Entities
 {
     public class Alert
     {

@@ -2,7 +2,7 @@
 using FarmTrack.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FarmTrack.Controllers
+namespace FarmTrack.Controllers.HomeController
 {
     public class LoginController : Controller
     {
@@ -15,7 +15,7 @@ namespace FarmTrack.Controllers
             _validation = new Validation();
         }
 
-        // GET Login - Render the login view
+        // GET Login - Render the login view  
         [HttpGet]
         public IActionResult Login()
         {
@@ -66,7 +66,7 @@ namespace FarmTrack.Controllers
             }
 
             // Create and save new user
-            var newUser = new User { Username = username, Password = password, Email = "" };
+            var newUser = new User { Username = username, Password = password };
             _context.Users.Add(newUser);
             _context.SaveChanges();
 

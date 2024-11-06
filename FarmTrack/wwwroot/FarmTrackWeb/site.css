@@ -411,12 +411,12 @@ body {
     display: flex;
 }
 
-.login-wrapper{
-    display:none;
+.login-wrapper {
+    display: block;
 }
 
 .register-wrapper{
-    display:block;
+    display: none;
 }
 
 #form-row-button{
