@@ -24,10 +24,10 @@ namespace FarmTrack.Controllers.HomeController
         
         // POST Login - Handle login form submission
         [HttpPost]
-        public IActionResult Login(string username, string password)
+        public IActionResult Login(User user)
         {
             // Use validation class to check credentials
-            bool isValid = _validation.validateLogin(username, password, _context);
+            bool isValid = _validation.validateLogin(user.Username, user.Password, _context);
 
             if (!isValid)
             {
@@ -36,6 +36,7 @@ namespace FarmTrack.Controllers.HomeController
             }
 
             // Successful login, redirect to dashboard
+            HttpContext.Session.SetObject("CurrentUser", user);
             return RedirectToAction("Index", "Dashboard");
         }
 
@@ -48,17 +49,10 @@ namespace FarmTrack.Controllers.HomeController
 
         // POST Register - Handle register form submission
         [HttpPost]
-        public IActionResult Register(string username, string password, string passwordConfirm)
+        public IActionResult Register(User user)
         {
-            // Check if passwords match
-            if (password != passwordConfirm)
-            {
-                ViewBag.Error = "Passwords do not match.";
-                return View();
-            }
-
             // Check if username already exists
-            var existingUser = _context.Users.FirstOrDefault(u => u.Username == username);
+            var existingUser = _context.Users.FirstOrDefault(u => u.Username == user.Username);
             if (existingUser != null)
             {
                 ViewBag.Error = "Username already taken.";
@@ -66,7 +60,7 @@ namespace FarmTrack.Controllers.HomeController
             }
 
             // Create and save new user
-            var newUser = new User { Username = username, Password = password };
+            var newUser = new User { Username = user.Username, Password = user.Password };
             _context.Users.Add(newUser);
             _context.SaveChanges();
 

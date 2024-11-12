@@ -13,7 +13,7 @@ builder.Services.AddDbContext<FarmContext>(options =>
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(5);
+    options.IdleTimeout = TimeSpan.FromSeconds(300);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });

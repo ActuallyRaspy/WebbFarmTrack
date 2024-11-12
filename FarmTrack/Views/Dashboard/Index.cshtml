@@ -1,4 +1,10 @@
-﻿@{
-    ViewData["Title"] = "Dashboard";
-}
+﻿@using FarmTrack.Models.Entities;
+@{
 
+    ViewData["Title"] = "Dashboard";
+    var user = Context.Session.GetObject<User>("CurrentUser") ?? new User();
+    ViewData["SessionUsername"] = user.Username;
+}
+<h1>@ViewData["SessionUsername"]</h1>
+
+ 
