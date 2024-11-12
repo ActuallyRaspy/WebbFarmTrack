@@ -10,7 +10,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<FarmContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(5);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // Add cookie policy globally
 builder.Services.Configure<CookiePolicyOptions>(options =>
@@ -44,6 +50,8 @@ app.UseRouting();
 app.UseCookiePolicy();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

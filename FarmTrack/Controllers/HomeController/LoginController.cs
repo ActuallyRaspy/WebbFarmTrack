@@ -21,7 +21,7 @@ namespace FarmTrack.Controllers.HomeController
         {
             return View();
         }
-
+        
         // POST Login - Handle login form submission
         [HttpPost]
         public IActionResult Login(string username, string password)
@@ -36,7 +36,7 @@ namespace FarmTrack.Controllers.HomeController
             }
 
             // Successful login, redirect to dashboard
-            return RedirectToAction("Dashboard", "Home");
+            return RedirectToAction("Index", "Dashboard");
         }
 
         // GET Register - Render the registration view
