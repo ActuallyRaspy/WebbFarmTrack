@@ -47,6 +47,12 @@
                     <button type="submit" id="register-submit-btn">Register</button>
                 </div>
             </form>
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-message">
+                    <p>@ViewBag.Error</p>
+                </div>
+            }
         </section>
     </div>
 

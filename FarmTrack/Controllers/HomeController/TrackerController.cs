@@ -21,13 +21,10 @@ namespace FarmTrack.Controllers.HomeController
             return View();
         }
 
-        public IActionResult Dashboard(string name, int numTimes = 1)
+        public IActionResult Dashboard()
         {
-            ViewData["message"] = "Hello " + name;
-            ViewData["numTimes"] = numTimes;
             return View();
         }
-
 
         public IActionResult Analysis()
         {

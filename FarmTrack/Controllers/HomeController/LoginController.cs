@@ -7,12 +7,11 @@ namespace FarmTrack.Controllers.HomeController
     public class LoginController : Controller
     {
         private readonly FarmContext _context;
-        private readonly Validation _validation;
 
         public LoginController(FarmContext context)
         {
             _context = context;
-            _validation = new Validation();
+            
         }
 
         // GET Login - Render the login view  
@@ -27,7 +26,7 @@ namespace FarmTrack.Controllers.HomeController
         public IActionResult Login(User user)
         {
             // Use validation class to check credentials
-            bool isValid = _validation.validateLogin(user.Username, user.Password, _context);
+            bool isValid = Validation.validateLogin(user.Username, user.Password, _context);
 
             if (!isValid)
             {
@@ -40,28 +39,32 @@ namespace FarmTrack.Controllers.HomeController
             return RedirectToAction("Index", "Dashboard");
         }
 
-        // GET Register - Render the registration view
-        [HttpGet]
-        public IActionResult Register()
-        {
-            return View();
-        }
+        //// GET Register - Render the registration view
+        //[HttpGet]
+        //public IActionResult Register()
+        //{
+        //    return View();
+        //}
 
         // POST Register - Handle register form submission
         [HttpPost]
         public IActionResult Register(User user)
         {
-            // Check if username already exists
-            var existingUser = _context.Users.FirstOrDefault(u => u.Username == user.Username);
-            if (existingUser != null)
+            switch (Validation.validateRegistration(user, _context))
             {
-                ViewBag.Error = "Username already taken.";
-                return View();
+                case 0:
+                    break;
+                case 1:
+                    ViewBag.Error = "Not all fields are filled";
+                    return View("Login");
+                case 2:
+                    ViewBag.Error = "Username already taken.";
+                    return View("Login");
             }
 
+
             // Create and save new user
-            var newUser = new User { Username = user.Username, Password = user.Password };
-            _context.Users.Add(newUser);
+            _context.Users.Add(user);
             _context.SaveChanges();
 
             // Redirect to login page after successful registration

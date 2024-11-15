@@ -5,7 +5,7 @@
     <div class="tracker-form-wrapper">
         <section class="tracker-form-section">
             <h2>Create a new crop</h2>
-            <form id="crop-create-form">
+            <form id="crop-create-form" asp-action="CreateCrop" method="post">
                 <div class="form-row">
                     <label for="crop-name">Crop name</label>
                     <input type="text" id="crop-name" placeholder="Crop name">
@@ -52,7 +52,7 @@
 
         <section class="tracker-form-section">
             <h2>Track a new crop</h2>
-            <form id="crop-track-form">
+            <form id="crop-track-form" asp-action="TrackCrop" method="post">
                 <div class="form-row">
                     <label for="farm-name">Farm name</label>
                     <input type="text" id="farm-name" placeholder="Farm name">
