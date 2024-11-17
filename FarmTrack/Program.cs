@@ -1,10 +1,14 @@
 using FarmTrack.Models; 
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using FarmTrack.Views.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<EnsureLoggedInAttribute>();
+});
 
 // Lägg till DbContext-konfiguration för att hantera databasanvändning
 builder.Services.AddDbContext<FarmContext>(options =>
@@ -49,12 +53,13 @@ app.UseRouting();
 
 app.UseCookiePolicy();
 
+app.UseSession();
+
 app.UseAuthorization();
 
-app.UseSession();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Login}/{action=Login}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

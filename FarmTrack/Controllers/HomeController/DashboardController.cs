@@ -1,5 +1,7 @@
 ﻿using FarmTrack.Models;
+using FarmTrack.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Xml.Linq;
@@ -22,9 +24,8 @@ namespace FarmTrack.Controllers.HomeController
             _logger = logger;
         }
 
-        public IActionResult Index(string name)
+        public IActionResult Index()
         {
-            ViewData["username"] = "Placeholder" + name;
             return View();
         }
 

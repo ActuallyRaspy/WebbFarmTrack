@@ -1,5 +1,7 @@
 ﻿using FarmTrack.Models;
+using FarmTrack.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Xml.Linq;
@@ -9,6 +11,14 @@ namespace FarmTrack.Controllers.HomeController
     public class TrackerController : Controller
     {
 
+        private readonly FarmContext _context;
+
+        public TrackerController(FarmContext context)
+        {
+            _context = context;
+
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -17,7 +27,11 @@ namespace FarmTrack.Controllers.HomeController
 
         public IActionResult Index(string name)
         {
-            ViewData["username"] = "Placeholder" + name;
+            if (HttpContext.Session.Get("CurrentUser").IsNullOrEmpty()) //If not logged in
+            {
+                return RedirectToAction("Login", "Login");
+            }
+
             return View();
         }
 
@@ -44,6 +58,37 @@ namespace FarmTrack.Controllers.HomeController
         public IActionResult Login()
         {
             return View();
+        }
+
+        // POST Register - Handle register form submission
+        [HttpPost]
+        public IActionResult CreateCrop(Crop crop)
+        {
+            switch (Validation.validateCreateCrop(crop, _context))
+            {
+                case 0:
+                    break;
+                case 1:
+                    ViewBag.Error = "Not all fields are filled";
+                    return View("Tracker");
+                case 2:
+                    ViewBag.Error = "Description is too large! Max 500 characters.";
+                    return View("Tracker");
+                case 3:
+                    ViewBag.Error = "Number of days to grow must be in whole numbers.";
+                        return View("Tracker");
+                case 4:
+                    ViewBag.Error = "Crop name already taken.";
+                    return View("Tracker");
+            }
+
+
+            // Create and save new user
+            _context.Crop.Add(crop);
+            _context.SaveChanges();
+
+            // Redirect to login page after successful registration
+            return RedirectToAction("Tracker");
         }
     }
 }
