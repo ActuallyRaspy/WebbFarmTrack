@@ -1,7 +1,9 @@
 ﻿@using FarmTrack.Models.Entities;
+@model IEnumerable<FarmTrack.Models.Entities.Crop>
 @{
     ViewData["Title"] = "Harvest";
 }
+
 <div class="tracker-content">
     <div class="tracker-form-wrapper">
         <section class="tracker-form-section">
@@ -69,6 +71,10 @@
                     <div>
                         <label for="crop-name">Crop</label>
                         <select id="crop-name" name="">
+                            @foreach(Crop crop in Model)
+                            {
+                                <option value="@crop.CropId">@crop.CropName</option>
+                            }
                             <!-- Fill by reading in the crops in the database-->
                         </select>
                     </div>
@@ -115,6 +121,7 @@
                 </tr>
             </thead>
             <tbody id="farm-data-table">
+
                 <!-- New rows will be added here -->
             </tbody>
         </table>

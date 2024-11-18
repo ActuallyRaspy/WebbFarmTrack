@@ -25,7 +25,7 @@ namespace FarmTrack.Controllers.HomeController
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Index(string name)
+        public IActionResult Index()
         {
             return View();
         }
@@ -42,7 +42,8 @@ namespace FarmTrack.Controllers.HomeController
 
         public IActionResult Tracker()
         {
-            return View();
+            var cropList = _context.Crop.ToList();
+            return View(cropList);
         }
 
         public IActionResult Alert()

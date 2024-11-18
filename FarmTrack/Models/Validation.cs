@@ -42,7 +42,7 @@ namespace FarmTrack.Models
 
             if (crop.CropName.IsNullOrEmpty() || crop.HarvestSeasonWarm.IsNullOrEmpty() ||
                 crop.HarvestSeasonCold.IsNullOrEmpty() || crop.PlantingSeasonCold.IsNullOrEmpty() ||
-                crop.PlantingSeasonWarm.IsNullOrEmpty() || crop.DaysToGrow == null)
+                crop.PlantingSeasonWarm.IsNullOrEmpty() || crop.DaysToGrow == null || crop.CropDescription.IsNullOrEmpty())
             {
                 return 1; //Missing data
             }
