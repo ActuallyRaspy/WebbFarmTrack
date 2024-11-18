@@ -1,12 +1,14 @@
 ﻿using FarmTrack.Models;
+using FarmTrack.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
 using System.Xml.Linq;
 
-namespace FarmTrack.Controllers
+namespace FarmTrack.Controllers.HomeController
 {
-    public class TrackerController : Controller
+    public class DashboardController : Controller
     {
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -15,19 +17,18 @@ namespace FarmTrack.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Index(string name)
+        private readonly ILogger<DashboardController> _logger;
+
+        public DashboardController(ILogger<DashboardController> logger)
         {
-            ViewData["username"] = "Placeholder" + name;
+            _logger = logger;
+        }
+
+        public IActionResult Index()
+        {
             return View();
         }
 
-        public IActionResult Dashboard(string name, int numTimes = 1)
-        {
-            ViewData["message"] = "Hello " + name;
-            ViewData["numTimes"] = numTimes;
-            return View();
-        }
-        
 
         public IActionResult Analysis()
         {

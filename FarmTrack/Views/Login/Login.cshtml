@@ -5,45 +5,55 @@
         <div class="login-wrapper" id="login-wrapper">
             <section class="tracker-form-section">
                 <h2>Login</h2>
-                <form id="login-form">
+            <form id="login-form" asp-action="Login" method="post">
                     <div class="form-row">
                         <label for="login-user-name">Username</label>
-                        <input type="text" id="login-user-name" placeholder="Username">
+                    <input type="text" id="login-user-name" name="username" placeholder="Username">
                     </div>
                     <div class="form-row">
                         <label for="login-user-password">Password</label>
-                        <input type="password" id="login-user-password" placeholder="Password">
+                    <input type="password" id="login-user-password" name="password" placeholder="Password">
                     </div>
                     <div class="form-row" id="form-row-button">
-                        <button type="button" id="register-page-btn" onclick="showRegister()">Create account</button>
-                        <button type="button" id="login-btn">Login</button>
+                        <button type="button" id="register-page-btn-login" onclick="hideLogin()">Create account</button>
+                    <button type="submit" id="login-submit-btn">Login</button>
                     </div>
                 </form>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="error-message">
+                        <p>@ViewBag.Error</p>
+                    </div>
+                }
             </section>
         </div>
 
-        <div class="register-wrapper" id="register-wrapper">
-            <section class="tracker-form-section">
-                <h2>Register an account</h2>
-                <form id="register-form">
-                    <div class="form-row">
-                        <label for="register-user-name">Username</label>
-                        <input type="text" id="register-user-name" placeholder="Username">
-                    </div>
-                    <div class="form-row">
-                        <label for="register-user-password">Password</label>
-                        <input type="password" id="register-user-password" placeholder="Password">
-                    </div>
-                    <div class="form-row">
-                        <label for="register-user-password-confirm">Confirm password</label>
-                        <input type="password" id="register-user-password-confirm" placeholder="Password">
-                    </div>
+    <div class="register-wrapper" id="register-wrapper">
+        <section class="tracker-form-section">
+            <h2>Register an account</h2>
+            <form id="register-form" asp-action="Register" method="post">
+                <div class="form-row">
+                    <label for="register-user-name">Username</label>
+                    <input type="text" id="register-user-name" name="username" placeholder="Username">
+                </div>
+                <div class="form-row">
+                    <label for="register-user-password">Password</label>
+                    <input type="password" id="register-user-password" name="password" placeholder="Password">
+                </div>
 
-                    <div class="form-row" id="form-row-button">
-                        <button type="button" id="register-page-btn" onclick="showLogin()">Back</button>
-                        <button type="button" id="login-btn">Register</button>
-                    </div>
-                </form>
-            </section>
-        </div>
+                <div class="form-row" id="form-row-button">
+                    <button type="button" id="register-page-btn-back" onclick="hideRegister()">Back</button>
+                    <button type="submit" id="register-submit-btn">Register</button>
+                </div>
+            </form>
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-message">
+                    <p>@ViewBag.Error</p>
+                </div>
+            }
+        </section>
+    </div>
+
     </div>

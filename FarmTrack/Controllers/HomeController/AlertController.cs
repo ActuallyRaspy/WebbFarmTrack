@@ -1,14 +1,12 @@
 ﻿using FarmTrack.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Text.Encodings.Web;
-using System.Xml.Linq;
+using Microsoft.AspNetCore.Http; // Required for CookieOptions
 
-namespace FarmTrack.Controllers
+namespace FarmTrack.Controllers.HomeController
 {
     public class AlertController : Controller
     {
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -28,6 +26,16 @@ namespace FarmTrack.Controllers
 
         public IActionResult Tracker()
         {
+            // Configure the cookie options
+            CookieOptions options = new CookieOptions
+            {
+                SameSite = SameSiteMode.None, // Adjust based on your needs (None, Lax, or Strict)
+                Secure = true // This ensures that the cookie is sent only over HTTPS
+            };
+
+            // Set a cookie with the configured options
+            Response.Cookies.Append("trackerCookie", "cookieValue", options);
+
             return View();
         }
 

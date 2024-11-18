@@ -1,16 +1,36 @@
 using FarmTrack.Models; 
-using Microsoft.EntityFrameworkCore; 
+using Microsoft.EntityFrameworkCore;
+using FarmTrack.Views.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews(options =>
+{
+    options.Filters.Add<EnsureLoggedInAttribute>(); // To keep non-logged in users out of pages they shouldnt see.
+});
 
 // Lägg till DbContext-konfiguration för att hantera databasanvändning
 builder.Services.AddDbContext<FarmContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(300);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+// Add cookie policy globally
+builder.Services.Configure<CookiePolicyOptions>(options =>
+{
+    options.MinimumSameSitePolicy = SameSiteMode.Lax;
+    options.Secure = CookieSecurePolicy.SameAsRequest; // Tillåt både HTTP och HTTPS
+});
+
 var app = builder.Build();
+
 
 // Se till att databasen skapas om den inte redan finns
 using (var scope = app.Services.CreateScope())
@@ -31,7 +51,12 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy();
+
+app.UseSession();
+
 app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",

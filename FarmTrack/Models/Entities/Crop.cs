@@ -5,11 +5,11 @@
         public int CropId { get; set; }
         public string CropName { get; set; }
         public string CropDescription { get; set; }
-        public DateTime PlantingSeasonCold { get; set; }
-        public DateTime PlantingSeasonWarm { get; set;}
-        public DateTime HarvestSeasonCold { get; set; }
-        public DateTime HarvestSeasonWarm { get; set; }
+        public string PlantingSeasonCold { get; set; } // Ändrad till string
+        public string PlantingSeasonWarm { get; set; } // Ändrad till string
+        public string HarvestSeasonCold { get; set; } // Ändrad till string
+        public string HarvestSeasonWarm { get; set; } // Ändrad till string
         public int DaysToGrow { get; set; }
-
     }
 }
+

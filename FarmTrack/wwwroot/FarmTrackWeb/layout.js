@@ -1,39 +1,60 @@
-document.getElementById('crop-track-form').addEventListener('click', function () {
-  // Hämta värden från formuläret
-  const farmName = document.getElementById('farm-name').value;
-  const cropName = document.getElementById('crop-name').value;
-  const amount = document.getElementById('amount').value;
-  const plantDate = document.getElementById('plant-date').value;
-  const harvestDate = document.getElementById('harvest-date').value;
+document.addEventListener('DOMContentLoaded', function () {
 
-  // Kontrollera att alla fält är ifyllda
-  if (!farmName || !cropName || !amount || !plantDate || !harvestDate) {
-      alert('Please fill out all fields.');
-      return;
-  }
+    // Kontrollera att knappen "Create crop" triggas
+    const createCropButton = document.getElementById('create-crop-btn');
+    if (createCropButton) {
+        createCropButton.addEventListener('click', function () {
+            console.log("Create crop button clicked!");
 
-  // Skapa en ny rad i tabellen
-  const table = document.getElementById('farm-data-table');
-  const newRow = table.insertRow();
+            // Samla värden från formuläret
+            const cropName = document.getElementById('crop-name').value;
+            const plantingSeasonWarm = document.getElementById('planting-season-warm').value;
+            const plantingSeasonCold = document.getElementById('planting-season-cold').value;
+            const harvestingSeasonWarm = document.getElementById('harvesting-season-warm').value;
+            const harvestingSeasonCold = document.getElementById('harvesting-season-cold').value;
+            const daysToGrow = document.getElementById('days-to-grow').value;
+            const description = document.getElementById('description').value;
 
-  // Fyll den nya raden med data
-  newRow.innerHTML = `
-      <td>${farmName}</td>
-      <td>${cropName}</td>
-      <td>${amount}</td>
-      <td>${plantDate}</td>
-      <td>${harvestDate}</td>
-      <td>Time left (calculate later)</td>
-      <td><input type="checkbox" class="tracker-checkbox"></td>
-      <td><button class="tracker-remove-btn">✖</button></td>
-  `;
+            // Skapa ett objekt med all data
+            const cropData = {
+                cropName: cropName,
+                plantingSeasonWarm: plantingSeasonWarm,
+                plantingSeasonCold: plantingSeasonCold,
+                harvestingSeasonWarm: harvestingSeasonWarm,
+                harvestingSeasonCold: harvestingSeasonCold,
+                daysToGrow: parseInt(daysToGrow),
+                cropDescription: description
+            };
 
-  // Lägg till en funktion för att ta bort raden
-  newRow.querySelector('.tracker-remove-btn').addEventListener('click', function () {
-      newRow.remove();
-  });
-
-  // Rensa formuläret efter att uppgifterna har lagts till
-  document.getElementById('cropForm').reset();
+            console.log("Sending crop data:", JSON.stringify(cropData));
+            // Skicka POST-förfrågan till servern för att skapa en crop
+            fetch('/CropManagement/Create', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(cropData)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("Crop created successfully!");
+                    } else {
+                        console.error('Failed to create crop:', response.statusText);
+                    }
+                })
+                .catch(error => console.error('Error creating crop:', error));
+        });
+    }
 });
 
+function hideRegister() {
+    console.log("Hide register button clicked!");
+    document.getElementById('register-wrapper').style.display = "none";
+    document.getElementById('login-wrapper').style.display = "block";
+}
+
+function hideLogin() {
+    console.log("Hide login button clicked!");
+    document.getElementById('login-wrapper').style.display = "none";
+    document.getElementById('register-wrapper').style.display = "block";
+}
