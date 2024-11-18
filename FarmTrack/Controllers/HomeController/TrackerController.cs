@@ -42,8 +42,13 @@ namespace FarmTrack.Controllers.HomeController
 
         public IActionResult Tracker()
         {
-            var cropList = _context.Crop.ToList();
-            return View(cropList);
+            var trackerViewModel = new TrackerViewModel
+            {
+                cropList = _context.Crop.ToList(),
+                fieldList = _context.Fields.ToList()
+            };
+
+            return View(trackerViewModel);
         }
 
         public IActionResult Alert()

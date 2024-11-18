@@ -1,11 +1,60 @@
 ﻿@using FarmTrack.Models.Entities;
-@model IEnumerable<FarmTrack.Models.Entities.Crop>
+@model TrackerViewModel
 @{
     ViewData["Title"] = "Harvest";
 }
 
 <div class="tracker-content">
     <div class="tracker-form-wrapper">
+        <section class="tracker-form-section">
+            <h2>Track a new crop</h2>
+            <form id="crop-track-form" asp-action="TrackCrop" method="post">
+                <div class="form-row">
+                    <div>
+                        <label for="field-name">Field</label>
+                        <select id="field-name" name="Field">
+                            @foreach (Field field in Model.fieldList)
+                            {
+                                <option value="@field.FieldId">@field.FieldName</option>
+                            }
+                            <!-- Fill by reading in the crops in the database-->
+                        </select>
+
+                        <label for="crop-name">Crop</label>
+                        <select id="crop-name" name="CropName">
+                            @foreach (Crop crop in Model.cropList)
+                            {
+                                <option value="@crop.CropId">@crop.CropName</option>
+                            }
+                            <!-- Fill by reading in the crops in the database-->
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row-pair">
+                    
+                    <div>
+                        <label for="amount">Amount (plants)</label>
+                        <input type="number" id="amount" placeholder="Amount">
+                    </div>
+                </div>
+
+                <div class="form-row-pair">
+                    <div>
+                        <label for="plant-date">Plant date</label>
+                        <input type="date" id="plant-date" name="PlantDate">
+                    </div>
+                </div>
+
+                <button type="button" id="addCropBtn">Add crop</button>
+            </form>
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-message">
+                    <p>@ViewBag.Error</p>
+                </div>
+            }
+        </section>
+
         <section class="tracker-form-section">
             <h2>Create a new crop</h2>
             <form id="crop-create-form" asp-action="CreateCrop" method="post">
@@ -59,43 +108,26 @@
             }
         </section>
 
+
         <section class="tracker-form-section">
-            <h2>Track a new crop</h2>
-            <form id="crop-track-form" asp-action="TrackCrop" method="post">
+            <h2>Create a new field</h2>
+            <form id="crop-track-form" asp-action="CreateField" method="post">
                 <div class="form-row">
-                    <label for="farm-name">Farm name</label>
-                    <input type="text" id="farm-name" placeholder="Farm name">
+                    <label for="field-name">Field name</label>
+                    <input type="text" id="field-name" placeholder="Field name" name="FieldName">
                 </div>
-
                 <div class="form-row-pair">
                     <div>
-                        <label for="crop-name">Crop</label>
-                        <select id="crop-name" name="">
-                            @foreach(Crop crop in Model)
-                            {
-                                <option value="@crop.CropId">@crop.CropName</option>
-                            }
-                            <!-- Fill by reading in the crops in the database-->
-                        </select>
+                        <label for="field-description">Field description</label>
+                        <input type="text" id="field-description">
                     </div>
                     <div>
-                        <label for="amount">Amount (plants)</label>
-                        <input type="number" id="amount" placeholder="Amount">
+                        <label for="hectare">Hectare</label>
+                        <input type="number" id="hectare" placeholder="Hectare" name="Hectare">
                     </div>
                 </div>
 
-                <div class="form-row-pair">
-                    <div>
-                        <label for="plant-date">Plant date</label>
-                        <input type="date" id="plant-date">
-                    </div>
-                    <div>
-                        <label for="harvest-date">Harvest date</label>
-                        <input type="date" id="harvest-date">
-                    </div>
-                </div>
-
-                <button type="button" id="addCropBtn">Add crop</button>
+                <button type="button" id="create-field-btn">Create field</button>
             </form>
             @if (ViewBag.Error != null)
             {
