@@ -27,11 +27,6 @@ namespace FarmTrack.Controllers.HomeController
 
         public IActionResult Index(string name)
         {
-            if (HttpContext.Session.Get("CurrentUser").IsNullOrEmpty()) //If not logged in
-            {
-                return RedirectToAction("Login", "Login");
-            }
-
             return View();
         }
 
@@ -60,14 +55,20 @@ namespace FarmTrack.Controllers.HomeController
             return View();
         }
 
-        // POST Register - Handle register form submission
+        // POST Register - Handle register crop submission
         [HttpPost]
         public IActionResult CreateCrop(Crop crop)
         {
             switch (Validation.validateCreateCrop(crop, _context))
             {
                 case 0:
-                    break;
+                    // Create and save new user
+                    _context.Crop.Add(crop);
+                    _context.SaveChanges();
+
+                    // Redirect to login page after successful registration
+                    return RedirectToAction("Tracker");
+
                 case 1:
                     ViewBag.Error = "Not all fields are filled";
                     return View("Tracker");
@@ -82,13 +83,8 @@ namespace FarmTrack.Controllers.HomeController
                     return View("Tracker");
             }
 
-
-            // Create and save new user
-            _context.Crop.Add(crop);
-            _context.SaveChanges();
-
-            // Redirect to login page after successful registration
-            return RedirectToAction("Tracker");
+            ViewBag.Error = "Error occurred.";
+            return View("Tracker");
         }
     }
 }

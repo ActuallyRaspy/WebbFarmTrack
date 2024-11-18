@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews(options =>
 {
-    options.Filters.Add<EnsureLoggedInAttribute>();
+    options.Filters.Add<EnsureLoggedInAttribute>(); // To keep non-logged in users out of pages they shouldnt see.
 });
 
 // Lägg till DbContext-konfiguration för att hantera databasanvändning
@@ -60,6 +60,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
 app.Run();

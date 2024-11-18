@@ -12,11 +12,11 @@ namespace FarmTrack.Views.Filters
             // Check if the "CurrentUser" session is null
             var currentUser = context.HttpContext.Session.GetObject<User>("CurrentUser");
 
-            // Get controller and action names
+            // Get the controller and action names to use
             var controllerName = context.RouteData.Values["controller"]?.ToString();
             var actionName = context.RouteData.Values["action"]?.ToString();
 
-            // Define public pages to exclude
+            // Define the public pages to exclude from the filter so that users can login
             var publicControllers = new[] { "Login", "Register" };
 
             // Skip checking for public controllers or actions

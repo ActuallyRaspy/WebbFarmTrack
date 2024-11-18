@@ -37,16 +37,18 @@ namespace FarmTrack.Models
         public static int validateCreateCrop(Crop crop, FarmContext _context)
         {
             var foundCrop = _context.Crop.FirstOrDefault(u => u.CropName == crop.CropName);
+
+            if (foundCrop != null) return 4;// Crop name already exists
+
             if (crop.CropName.IsNullOrEmpty() || crop.HarvestSeasonWarm.IsNullOrEmpty() ||
                 crop.HarvestSeasonCold.IsNullOrEmpty() || crop.PlantingSeasonCold.IsNullOrEmpty() ||
-                crop.PlantingSeasonWarm.IsNullOrEmpty() || crop.DaysToGrow.ToString().IsNullOrEmpty())
+                crop.PlantingSeasonWarm.IsNullOrEmpty() || crop.DaysToGrow == null)
             {
                 return 1; //Missing data
             }
 
             if (crop.CropDescription.Length > 500) return 2; // Description too large
-            if (!int.TryParse(crop.DaysToGrow.ToString(), out int o)) return 3; // Days are not in Int format, cannot be parsed. 
-            if(crop.CropName.ToLower() == foundCrop.CropName.ToLower()) return 4; // Crop name already exists
+            if (!int.TryParse(crop.DaysToGrow.ToString(), out int o)) return 3; // Days are not in Int format, cannot be parsed.
             return 0; // Valid inputs
         }
     }

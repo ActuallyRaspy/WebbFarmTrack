@@ -9,46 +9,52 @@
             <form id="crop-create-form" asp-action="CreateCrop" method="post">
                 <div class="form-row">
                     <label for="crop-name">Crop name</label>
-                    <input type="text" id="crop-name" placeholder="Crop name">
+                    <input type="text" id="crop-name" placeholder="Crop name" name="cropName">
                 </div>
 
                 <div class="form-row-pair">
                     <div>
                         <label for="planting-season-warm">Planting season (Warm climate)</label>
-                        <input type="text" id="planting-season-warm" placeholder="Jan-June">
+                        <input type="text" id="planting-season-warm" placeholder="Jan-June" name="plantingSeasonWarm">
                     </div>
                     <div>
                         <label for="planting-season-cold">Planting season (Cold climate)</label>
-                        <input type="text" id="planting-season-cold" placeholder="Aug-Dec">
+                        <input type="text" id="planting-season-cold" placeholder="Aug-Dec" name="plantingSeasonCold">
                     </div>
                 </div>
 
                 <div class="form-row-pair">
                     <div>
                         <label for="harvesting-season-warm">Harvesting season (Warm climate)</label>
-                        <input type="text" id="harvesting-season-warm" placeholder="Jan-June">
+                        <input type="text" id="harvesting-season-warm" placeholder="Jan-June" name="harvestSeasonWarm">
                     </div>
                     <div>
                         <label for="harvesting-season-cold">Harvesting season (Cold climate)</label>
-                        <input type="text" id="harvesting-season-cold" placeholder="Aug-Dec">
+                        <input type="text" id="harvesting-season-cold" placeholder="Aug-Dec" name="harvestSeasonCold">
                     </div>
                 </div>
 
                 <div class="form-row-pair">
                     <div>
                         <label for="days-to-grow">Days to grow</label>
-                        <input type="number" id="days-to-grow" placeholder="100">
+                        <input type="number" id="days-to-grow" placeholder="100" name="daysToGrow">
                     </div>
                 </div>
                 <div class="form-row-pair">
                     <div>
                         <label for="description">Description</label>
-                        <input type="text" id="description" placeholder="Wet earth, 2cm deep.">
+                        <input type="text" id="description" placeholder="Wet earth, 2cm deep." name="cropDescription">
                     </div>
                 </div>
 
-                <button type="button" id="create-crop-btn">Create crop</button>
+                <button type="submit" id="create-crop-btn">Create crop</button>
             </form>
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-message">
+                    <p>@ViewBag.Error</p>
+                </div>
+            }
         </section>
 
         <section class="tracker-form-section">
@@ -85,6 +91,12 @@
 
                 <button type="button" id="addCropBtn">Add crop</button>
             </form>
+            @if (ViewBag.Error != null)
+            {
+                <div class="error-message">
+                    <p>@ViewBag.Error</p>
+                </div>
+            }
         </section>
     </div>
 

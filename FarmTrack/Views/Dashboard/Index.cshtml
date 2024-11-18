@@ -5,6 +5,6 @@
     var user = Context.Session.GetObject<User>("CurrentUser") ?? new User();
     ViewData["SessionUsername"] = user.Username;
 }
-<h1>@ViewData["SessionUsername"]</h1>
+<h1>Welcome, @ViewData["SessionUsername"]</h1>
 
  
