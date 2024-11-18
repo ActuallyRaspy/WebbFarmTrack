@@ -7,44 +7,58 @@
 <div class="tracker-content">
     <div class="tracker-form-wrapper">
         <section class="tracker-form-section">
+
             <h2>Track a new crop</h2>
             <form id="crop-track-form" asp-action="TrackCrop" method="post">
                 <div class="form-row">
                     <div>
-                        <label for="field-name">Field</label>
-                        <select id="field-name" name="Field">
-                            @foreach (Field field in Model.fieldList)
-                            {
-                                <option value="@field.FieldId">@field.FieldName</option>
-                            }
-                            <!-- Fill by reading in the crops in the database-->
-                        </select>
+                        <label for="field-name">Field</label> 
+                        @if (Model.fieldList.Count() == 0)
+                        { //If there are no fields, disable select and display message
+                            <select id="field-name" name="Field" disabled>
+                                <option>No fields exist.</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="field-name" name="Field">
+                                @foreach (Field field in Model.fieldList)
+                                {
+                                    <option value="@field.FieldId">@field.FieldName</option>
+                                }
+                            </select>
+                        }
 
                         <label for="crop-name">Crop</label>
-                        <select id="crop-name" name="CropName">
-                            @foreach (Crop crop in Model.cropList)
-                            {
-                                <option value="@crop.CropId">@crop.CropName</option>
-                            }
-                            <!-- Fill by reading in the crops in the database-->
-                        </select>
+                        @if (Model.cropList.Count() == 0)
+                        {//If there are no crops, disable select and display message
+                            <select id="crop-name" name="CropName" disabled>
+                                <option>No crops exist.</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <select id="crop-name" name="CropName">
+                                @foreach (Crop crop in Model.cropList)
+                                {
+                                    <option value="@crop.CropId">@crop.CropName</option>
+                                }
+                            </select>
+                        }
+                        
                     </div>
                 </div>
                 <div class="form-row-pair">
-                    
                     <div>
                         <label for="amount">Amount (plants)</label>
                         <input type="number" id="amount" placeholder="Amount">
                     </div>
-                </div>
 
-                <div class="form-row-pair">
                     <div>
                         <label for="plant-date">Plant date</label>
                         <input type="date" id="plant-date" name="PlantDate">
                     </div>
                 </div>
-
                 <button type="button" id="addCropBtn">Add crop</button>
             </form>
             @if (ViewBag.Error != null)

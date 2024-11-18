@@ -1,20 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Hämta crops och fyll dropdown-menyn
-    fetch('/CropManagement/Index')
-        .then(response => response.json())
-        .then(data => {
-            const dropdown = document.getElementById("crop-name");
-            data.forEach(crop => {
-                let option = document.createElement("option");
-                option.value = crop.cropId;
-                option.text = crop.cropName;
-                dropdown.appendChild(option);
-            });
-        })
-        .catch(error => console.error('Error fetching crops:', error));
-
-
-    
 
     // Kontrollera att knappen "Create crop" triggas
     const createCropButton = document.getElementById('create-crop-btn');
@@ -22,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
         createCropButton.addEventListener('click', function () {
             console.log("Create crop button clicked!");
 
-            // Samla in värden från formuläret
+            // Samla värden från formuläret
             const cropName = document.getElementById('crop-name').value;
             const plantingSeasonWarm = document.getElementById('planting-season-warm').value;
             const plantingSeasonCold = document.getElementById('planting-season-cold').value;
@@ -54,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 .then(response => {
                     if (response.ok) {
                         console.log("Crop created successfully!");
-                        // Här kan du lägga till kod för att visa ett meddelande eller ladda om sidan
                     } else {
                         console.error('Failed to create crop:', response.statusText);
                     }
