@@ -73,8 +73,7 @@ namespace FarmTrack.Controllers.HomeController
                     _context.SaveChanges();
 
                     // Redirect to login page after successful registration
-                    return RedirectToAction("Tracker");
-
+                    return View("Tracker");
                 case 1:
                     ViewBag.Error = "Not all fields are filled";
                     return View("Tracker");
@@ -83,7 +82,7 @@ namespace FarmTrack.Controllers.HomeController
                     return View("Tracker");
                 case 3:
                     ViewBag.Error = "Number of days to grow must be in whole numbers.";
-                        return View("Tracker");
+                    return View("Tracker");
                 case 4:
                     ViewBag.Error = "Crop name already taken.";
                     return View("Tracker");
@@ -91,6 +90,61 @@ namespace FarmTrack.Controllers.HomeController
 
             ViewBag.Error = "Error occurred.";
             return View("Tracker");
+        }
+
+        // POST Register - Handle register crop submission
+        [HttpPost]
+        public IActionResult TrackCrop(PlantedCrop plantedCrop)
+        {
+            switch (Validation.validateTrackCrop(plantedCrop, _context))
+            {
+                case 0:
+                    // Create and save new user
+                    _context.PlantedCrop.Add(plantedCrop);
+                    _context.SaveChanges();
+
+                    // Redirect to login page after successful registration
+                    return View("Tracker");
+                case 1:
+                    ViewBag.Error = "Not all fields are filled.";
+                    return View("Tracker");
+            }
+            ViewBag.Error = "Error occurred.";
+            return View("Tracker");
+        }
+
+        // POST Register - Handle register crop submission
+        [HttpPost]
+        public IActionResult CreateField(Field field)
+        {
+            User sessionUser = HttpContext.Session.GetObject<User>("CurrentUser");
+            if (sessionUser == null)
+            {
+                ViewBag.Error = "No user detected, try refreshing the page and logging in again.";
+                return RedirectToAction("Tracker");
+            }
+
+            field.User = sessionUser;
+            field.UserId = sessionUser.UserID;
+
+            switch (Validation.validateCreateField(field, _context))
+            {
+                case 0:
+                    // Create and save new user
+                    _context.Fields.Add(field);
+                    _context.SaveChanges();
+
+                    // Redirect to login page after successful registration
+                    return RedirectToAction("Tracker");
+                case 1:
+                    ViewBag.Error = "Not all fields are filled.";
+                    return RedirectToAction("Tracker");
+                case 2:
+                    ViewBag.Error = "Description is too long (max 500 characters)";
+                    return RedirectToAction("Tracker");
+            }
+            ViewBag.Error = "Error occurred.";
+            return RedirectToAction("Tracker");
         }
     }
 }

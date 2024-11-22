@@ -51,5 +51,30 @@ namespace FarmTrack.Models
             if (!int.TryParse(crop.DaysToGrow.ToString(), out int o)) return 3; // Days are not in Int format, cannot be parsed.
             return 0; // Valid inputs
         }
+
+        public static int validateTrackCrop(PlantedCrop plantedCrop, FarmContext _context)
+        {
+            if(plantedCrop.Crop == null  || plantedCrop.Field.FieldName.IsNullOrEmpty() ||
+                plantedCrop.PlantDate == default(DateTime))
+            {
+                return 1; //Not all fields are filled
+            }
+
+            return 0;
+        }
+
+        public static int validateCreateField(Field field, FarmContext _context)
+        {
+            if(field.Hectare.ToString().IsNullOrEmpty() || field.FieldName.IsNullOrEmpty() || field.Description.IsNullOrEmpty())
+            {
+                return 1; //Invalid inputs
+            }
+
+            if(field.Description.Length > 500)
+            {
+                return 2;
+            }
+            return 0;
+        }
     }
 }
