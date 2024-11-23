@@ -52,6 +52,22 @@ namespace FarmTrack.Models
                 .HasForeignKey(b => b.AlertId)
                 .HasPrincipalKey(b => b.PlantedCropId);
 
+            modelBuilder.Entity<PlantedCrop>()
+                .Property(p => p.PlantedCropId)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Alert>()
+                .Property(p => p.AlertId)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Crop>()
+                .Property(p => p.CropId)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<User>()
+                .Property(p => p.UserID)
+                .ValueGeneratedOnAdd();
+            modelBuilder.Entity<Field>()
+                .Property(p => p.FieldId)
+                .ValueGeneratedOnAdd();
+
         }
     }
 }

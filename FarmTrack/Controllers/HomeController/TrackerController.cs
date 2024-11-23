@@ -73,19 +73,19 @@ namespace FarmTrack.Controllers.HomeController
                     _context.SaveChanges();
 
                     // Redirect to login page after successful registration
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 1:
                     ViewBag.Error = "Not all fields are filled";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 2:
                     ViewBag.Error = "Description is too large! Max 500 characters.";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 3:
                     ViewBag.Error = "Number of days to grow must be in whole numbers.";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 4:
                     ViewBag.Error = "Crop name already taken.";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
             }
 
             ViewBag.Error = "Error occurred.";
@@ -96,10 +96,30 @@ namespace FarmTrack.Controllers.HomeController
         [HttpPost]
         public IActionResult TrackCrop(PlantedCrop plantedCrop)
         {
+            Crop dbCrop = _context.Crop.FirstOrDefault(c => c.CropId == plantedCrop.CropId);
+            Field dbField = _context.Fields.FirstOrDefault(c => c.FieldId == plantedCrop.FieldId);
+            plantedCrop.Field = dbField;
+            plantedCrop.Crop = dbCrop;
+            
             switch (Validation.validateTrackCrop(plantedCrop, _context))
             {
                 case 0:
                     // Create and save new user
+                    Alert plantedCropAlert = new Alert
+                    {
+                        AlertDate = plantedCrop.PlantDate,
+                        AlertName = plantedCrop.Crop.CropName,
+                        PlantedCrop = plantedCrop,
+                        PlantedCropId = plantedCrop.PlantedCropId,
+                        Dismissed = 0,
+                        Triggered = 0,
+                        AlertDescription = ""
+                    };
+
+                    plantedCrop.Harvested = 0;
+                    
+
+                    _context.Alerts.Add(plantedCropAlert);
                     _context.PlantedCrop.Add(plantedCrop);
                     _context.SaveChanges();
 
@@ -112,6 +132,16 @@ namespace FarmTrack.Controllers.HomeController
             ViewBag.Error = "Error occurred.";
             return View("Tracker");
         }
+
+        //public int PlantedCropId { get; set; }
+        //public DateTime PlantDate { get; set; }
+        //public int Harvested { get; set; } // 0 if not yet harvested, 1 if harvested.
+        //public int FieldId { get; set; }
+        //public Field Field { get; set; }
+        //public int CropId { get; set; }
+        //public Crop Crop { get; set; }
+        //public ICollection<Alert> Alerts { get; set; }
+
 
         // POST Register - Handle register crop submission
         [HttpPost]

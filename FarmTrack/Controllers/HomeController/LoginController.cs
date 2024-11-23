@@ -68,7 +68,7 @@ namespace FarmTrack.Controllers.HomeController
             _context.SaveChanges();
 
             // Redirect to login page after successful registration
-            return RedirectToAction("Login");
+            return View("Login");
         }
     }
 }

@@ -54,7 +54,9 @@ namespace FarmTrack.Models
 
         public static int validateTrackCrop(PlantedCrop plantedCrop, FarmContext _context)
         {
-            if(plantedCrop.Crop == null  || plantedCrop.Field.FieldName.IsNullOrEmpty() ||
+            if (plantedCrop.Crop == null) return 1;
+
+            if(plantedCrop.Crop.CropName.IsNullOrEmpty() || plantedCrop.Field.FieldName.IsNullOrEmpty() ||
                 plantedCrop.PlantDate == default(DateTime))
             {
                 return 1; //Not all fields are filled

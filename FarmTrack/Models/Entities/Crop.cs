@@ -1,7 +1,10 @@
-﻿namespace FarmTrack.Models.Entities
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace FarmTrack.Models.Entities
 {
     public class Crop
     {
+        
         public int CropId { get; set; }
         public string CropName { get; set; }
         public string CropDescription { get; set; }

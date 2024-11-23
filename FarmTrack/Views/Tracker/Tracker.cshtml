@@ -13,15 +13,15 @@
                 <div class="form-row">
                     <div>
                         <label for="field-name">Field</label> 
-                        @if (Model.fieldList.Count() == 0)
+                        @if (Model == null || Model.fieldList.Count() == 0)
                         { //If there are no fields, disable select and display message
-                            <select id="field-name" name="Field" disabled>
+                            <select id="field-name" disabled>
                                 <option>No fields exist.</option>
                             </select>
                         }
                         else
                         {
-                            <select id="field-name" name="Field">
+                            <select id="field-name" name="FieldId">
                                 @foreach (Field field in Model.fieldList)
                                 {
                                     <option value="@field.FieldId">@field.FieldName</option>
@@ -30,15 +30,15 @@
                         }
 
                         <label for="crop-name">Crop</label>
-                        @if (Model.cropList.Count() == 0)
+                        @if (Model == null || Model.cropList.Count() == 0)
                         {//If there are no crops, disable select and display message
-                            <select id="crop-name" name="CropName" disabled>
+                            <select id="crop-name" disabled>
                                 <option>No crops exist.</option>
                             </select>
                         }
                         else
                         {
-                            <select id="crop-name" name="CropName">
+                            <select id="crop-name" name="CropId">
                                 @foreach (Crop crop in Model.cropList)
                                 {
                                     <option value="@crop.CropId">@crop.CropName</option>
@@ -59,7 +59,7 @@
                         <input type="date" id="plant-date" name="PlantDate">
                     </div>
                 </div>
-                <button type="button" id="addCropBtn">Add crop</button>
+                <button type="submit" id="track-crop-btn">Track crop</button>
             </form>
             @if (ViewBag.Error != null)
             {
