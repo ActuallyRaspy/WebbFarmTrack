@@ -110,21 +110,22 @@ namespace FarmTrack.Controllers.HomeController
                         AlertDate = plantedCrop.PlantDate,
                         AlertName = plantedCrop.Crop.CropName,
                         PlantedCrop = plantedCrop,
-                        PlantedCropId = plantedCrop.PlantedCropId,
+                        //PlantedCropId = plantedCrop.PlantedCropId,
                         Dismissed = 0,
                         Triggered = 0,
                         AlertDescription = ""
                     };
 
                     plantedCrop.Harvested = 0;
-                    
 
                     _context.Alerts.Add(plantedCropAlert);
                     _context.PlantedCrop.Add(plantedCrop);
+                    
+                    
                     _context.SaveChanges();
 
                     // Redirect to login page after successful registration
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 1:
                     ViewBag.Error = "Not all fields are filled.";
                     return View("Tracker");

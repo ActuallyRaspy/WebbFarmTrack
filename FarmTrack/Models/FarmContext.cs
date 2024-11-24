@@ -35,16 +35,16 @@ namespace FarmTrack.Models
                 .HasPrincipalKey(b => b.FieldId);
 
             modelBuilder.Entity<PlantedCrop>()
-                .HasMany(b => b.Alerts)
-                .WithOne(b => b.PlantedCrop)
-                .HasForeignKey(b => b.AlertId)
-                .HasPrincipalKey(b => b.PlantedCropId);
+                .HasMany(p => p.Alerts)
+                .WithOne(a => a.PlantedCrop)
+                .HasForeignKey(a => a.PlantedCropId) 
+                .HasPrincipalKey(p => p.PlantedCropId);
 
             modelBuilder.Entity<PlantedCrop>()
-                .HasOne(b => b.Field)
-                .WithMany(b => b.PlantedCrops)
-                .HasForeignKey(b => b.PlantedCropId)
-                .HasPrincipalKey(b => b.FieldId);
+                .HasOne(p => p.Field)
+                .WithMany(f => f.PlantedCrops)
+                .HasForeignKey(p => p.FieldId) 
+                .HasPrincipalKey(f => f.FieldId); 
 
             modelBuilder.Entity<Alert>()
                 .HasOne(b => b.PlantedCrop)
