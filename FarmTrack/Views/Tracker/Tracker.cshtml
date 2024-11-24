@@ -21,7 +21,7 @@
                         }
                         else
                         {
-                            <select id="field-name" name="Field">
+                            <select id="field-name" name="Field" required>
                                 @foreach (Field field in Model.fieldList)
                                 {
                                     <option value="@field.FieldId">@field.FieldName</option>
@@ -38,7 +38,7 @@
                         }
                         else
                         {
-                            <select id="crop-name" name="CropName">
+                            <select id="crop-name" name="CropName" required>
                                 @foreach (Crop crop in Model.cropList)
                                 {
                                     <option value="@crop.CropId">@crop.CropName</option>
@@ -59,12 +59,12 @@
                         <input type="date" id="plant-date" name="PlantDate">
                     </div>
                 </div>
-                <button type="button" id="addCropBtn">Add crop</button>
+                <button type="submit" id="addCropBtn">Add crop</button>
             </form>
-            @if (ViewBag.Error != null)
+            @if (TempData["Alert"] != null)
             {
                 <div class="error-message">
-                    <p>@ViewBag.Error</p>
+                    <p>@TempData["Alert"]</p>
                 </div>
             }
         </section>

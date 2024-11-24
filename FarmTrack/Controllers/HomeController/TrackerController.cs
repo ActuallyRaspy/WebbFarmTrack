@@ -92,5 +92,49 @@ namespace FarmTrack.Controllers.HomeController
             ViewBag.Error = "Error occurred.";
             return View("Tracker");
         }
+
+        // **Ny metod för att spåra och skapa crop samt alert**
+        [HttpPost]
+        public IActionResult TrackCrop(int Field, int CropName, DateTime PlantDate)
+        {
+            if (Field == 0 || CropName == 0 || PlantDate == default)
+            {
+                TempData["Alert"] = "All fields are required.";
+                return RedirectToAction("Tracker");
+            }
+
+            // Skapa en ny PlantedCrop
+            var plantedCrop = new PlantedCrop
+            {
+                FieldId = Field,
+                CropId = CropName,
+                PlantDate = PlantDate,
+                Climate = 0,
+                Harvested = 0
+            };
+
+            // Lägg till PlantedCrop i databasen
+            _context.PlantedCrops.Add(plantedCrop);
+            _context.SaveChanges();
+
+            // Skapa en Alert kopplad till PlantedCrop
+            var alert = new Alert
+            {
+                AlertName = "Harvest Alert",
+                AlertDescription = $"Your crop needs harvesting soon!",
+                AlertDate = PlantDate.AddDays(90),
+                Triggered = 0,
+                Dismissed = 0,
+                PlantedCropId = plantedCrop.PlantedCropId
+            };
+
+            // Lägg till Alert i databasen
+            _context.Alerts.Add(alert);
+            _context.SaveChanges();
+
+            // Bekräftelse till användaren
+            TempData["Alert"] = "Crop tracked successfully, and alert created!";
+            return RedirectToAction("Tracker");
+        }
     }
 }
