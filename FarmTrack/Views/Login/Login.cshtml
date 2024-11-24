@@ -20,12 +20,12 @@
                     </div>
                 </form>
 
-                @if (ViewBag.Error != null)
-                {
-                    <div class="error-message">
-                        <p>@ViewBag.Error</p>
-                    </div>
-                }
+            @if (TempData["Alert"] != null)
+            {
+                <div class="alert alert-warning">
+                    @TempData["Alert"]
+                </div>
+            }
             </section>
         </div>
 
@@ -47,10 +47,10 @@
                     <button type="submit" id="register-submit-btn">Register</button>
                 </div>
             </form>
-            @if (ViewBag.Error != null)
+            @if (TempData["Alert"] != null)
             {
-                <div class="error-message">
-                    <p>@ViewBag.Error</p>
+                <div class="alert alert-warning">
+                    @TempData["Alert"]
                 </div>
             }
         </section>
