@@ -5,28 +5,45 @@
     <div class="tracker-form-wrapper">
         <section class="tracker-form-section">
             <h2>Create a new alert</h2>
-            <form id="alert-form">
+            <form id="alert-form" asp-action="CreateAlert" method="post">
                 <div class="form-row">
-                    <label for="farm-name">Alert name</label>
-                    <input type="text" id="alert-name" placeholder="Alert name">
+                    <label for="alert-name">Alert name</label>
+                    <input type="text" id="alert-name" name="alertName" placeholder="Alert name" required>
                 </div>
 
                 <div class="form-row-pair">
                     <div>
                         <label for="alert-description">Description</label>
-                        <input type="text" id="alert-description" placeholder="Water, fertilize">
+                        <input type="text" id="alert-description" name="alertDescription" placeholder="Water, fertilize" required>
                     </div>
                     <div>
                         <label for="alert-date">Alert date</label>
-                        <input type="date" id="alert-date">
+                        <input type="date" id="alert-date" name="alertDate" required>
                     </div>
                 </div>
-                <button type="button" id="create-alert-btn">Add alert</button>
+                <button type="submit" id="create-alert-btn">Add alert</button>
             </form>
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="error-message">
+                    <p>@TempData["Error"]</p>
+                </div>
+            }
+
+            @if (TempData["Success"] != null)
+            {
+                <div class="success-message">
+                    <p>@TempData["Success"]</p>
+                </div>
+            }
+
+            
         </section>
     </div>
 
     <section class="tracker-table-section">
+        <h2>Existing Alerts</h2>
         <table>
             <thead>
                 <tr>
@@ -34,11 +51,35 @@
                     <th>Description</th>
                     <th>Alert date</th>
                     <th>Days left</th>
+                    <th>Crop</th>
                     <th>Remove</th>
                 </tr>
             </thead>
             <tbody id="alert-data-table">
-                <!-- New rows will be added here -->
+                @foreach (var alert in ViewBag.Alerts as List<FarmTrack.Models.Entities.Alert>)
+                {
+                    <tr>
+                        <td>@alert.AlertName</td>
+                        <td>@alert.AlertDescription</td>
+                        <td>@alert.AlertDate.ToShortDateString()</td>
+                        <td>@((alert.AlertDate - DateTime.Now).Days)</td>
+
+                        @if (alert.PlantedCrop == null) 
+                        {
+                            <td>No planted crop</td>
+                        }
+
+                        else {
+                        <td>@alert.PlantedCrop.Crop.CropName</td> <!-- Visa grödans namn -->}
+                       
+                        <td>
+                            <form asp-action="DeleteAlert" method="post">
+                                <input type="hidden" name="alertId" value="@alert.AlertId" />
+                                <button type="submit">Remove</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </section>
