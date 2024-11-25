@@ -74,66 +74,107 @@ namespace FarmTrack.Controllers.HomeController
 
                     // Redirect to login page after successful registration
                     return RedirectToAction("Tracker");
-
                 case 1:
                     ViewBag.Error = "Not all fields are filled";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 2:
                     ViewBag.Error = "Description is too large! Max 500 characters.";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 3:
                     ViewBag.Error = "Number of days to grow must be in whole numbers.";
-                        return View("Tracker");
+                    return RedirectToAction("Tracker");
                 case 4:
                     ViewBag.Error = "Crop name already taken.";
-                    return View("Tracker");
+                    return RedirectToAction("Tracker");
             }
 
             ViewBag.Error = "Error occurred.";
             return View("Tracker");
         }
 
-        // **Ny metod för att spåra och skapa crop samt alert**
+        // POST Register - Handle register crop submission
         [HttpPost]
-        public IActionResult TrackCrop(int Field, int CropName, DateTime PlantDate)
+        public IActionResult TrackCrop(PlantedCrop plantedCrop)
         {
-            if (Field == 0 || CropName == 0 || PlantDate == default)
+            Crop dbCrop = _context.Crop.FirstOrDefault(c => c.CropId == plantedCrop.CropId);
+            Field dbField = _context.Fields.FirstOrDefault(c => c.FieldId == plantedCrop.FieldId);
+            plantedCrop.Field = dbField;
+            plantedCrop.Crop = dbCrop;
+            
+            switch (Validation.validateTrackCrop(plantedCrop, _context))
             {
-                TempData["Alert"] = "All fields are required.";
+                case 0:
+                    // Create and save new user
+                    Alert plantedCropAlert = new Alert
+                    {
+                        AlertDate = plantedCrop.PlantDate,
+                        AlertName = plantedCrop.Crop.CropName,
+                        PlantedCrop = plantedCrop,
+                        //PlantedCropId = plantedCrop.PlantedCropId,
+                        Dismissed = 0,
+                        Triggered = 0,
+                        AlertDescription = ""
+                    };
+
+                    plantedCrop.Harvested = 0;
+
+                    _context.Alerts.Add(plantedCropAlert);
+                    _context.PlantedCrop.Add(plantedCrop);
+                    
+                    
+                    _context.SaveChanges();
+
+                    // Redirect to login page after successful registration
+                    return RedirectToAction("Tracker");
+                case 1:
+                    ViewBag.Error = "Not all fields are filled.";
+                    return View("Tracker");
+            }
+            ViewBag.Error = "Error occurred.";
+            return View("Tracker");
+        }
+
+        //public int PlantedCropId { get; set; }
+        //public DateTime PlantDate { get; set; }
+        //public int Harvested { get; set; } // 0 if not yet harvested, 1 if harvested.
+        //public int FieldId { get; set; }
+        //public Field Field { get; set; }
+        //public int CropId { get; set; }
+        //public Crop Crop { get; set; }
+        //public ICollection<Alert> Alerts { get; set; }
+
+
+        // POST Register - Handle register crop submission
+        [HttpPost]
+        public IActionResult CreateField(Field field)
+        {
+            User sessionUser = HttpContext.Session.GetObject<User>("CurrentUser");
+            if (sessionUser == null)
+            {
+                ViewBag.Error = "No user detected, try refreshing the page and logging in again.";
                 return RedirectToAction("Tracker");
             }
 
-            // Skapa en ny PlantedCrop
-            var plantedCrop = new PlantedCrop
+            field.User = sessionUser;
+            field.UserId = sessionUser.UserID;
+
+            switch (Validation.validateCreateField(field, _context))
             {
-                FieldId = Field,
-                CropId = CropName,
-                PlantDate = PlantDate,
-                Climate = 0,
-                Harvested = 0
-            };
+                case 0:
+                    // Create and save new user
+                    _context.Fields.Add(field);
+                    _context.SaveChanges();
 
-            // Lägg till PlantedCrop i databasen
-            _context.PlantedCrops.Add(plantedCrop);
-            _context.SaveChanges();
-
-            // Skapa en Alert kopplad till PlantedCrop
-            var alert = new Alert
-            {
-                AlertName = "Harvest Alert",
-                AlertDescription = $"Your crop needs harvesting soon!",
-                AlertDate = PlantDate.AddDays(90),
-                Triggered = 0,
-                Dismissed = 0,
-                PlantedCropId = plantedCrop.PlantedCropId
-            };
-
-            // Lägg till Alert i databasen
-            _context.Alerts.Add(alert);
-            _context.SaveChanges();
-
-            // Bekräftelse till användaren
-            TempData["Alert"] = "Crop tracked successfully, and alert created!";
+                    // Redirect to login page after successful registration
+                    return RedirectToAction("Tracker");
+                case 1:
+                    ViewBag.Error = "Not all fields are filled.";
+                    return RedirectToAction("Tracker");
+                case 2:
+                    ViewBag.Error = "Description is too long (max 500 characters)";
+                    return RedirectToAction("Tracker");
+            }
+            ViewBag.Error = "Error occurred.";
             return RedirectToAction("Tracker");
         }
     }
