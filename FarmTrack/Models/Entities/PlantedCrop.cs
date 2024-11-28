@@ -17,5 +17,6 @@ namespace FarmTrack.Models.Entities
         public Crop Crop { get; set; }
 
         public ICollection<Alert> Alerts { get; set; }
+        public int Amount { get; set; }
     }
 }

@@ -5,5 +5,6 @@ namespace FarmTrack.Models
     {
         public IEnumerable<Crop> cropList { get; set; }
         public IEnumerable<Field> fieldList { get; set; }
+        public List<PlantedCrop> plantedCrops { get; set; }
     }
 }

@@ -175,7 +175,43 @@
             </thead>
             <tbody id="farm-data-table">
 
-                <!-- New rows will be added here -->
+                @if (Model.plantedCrops != null && Model.plantedCrops.Any())
+                {
+                    foreach (var crop in Model.plantedCrops)
+                    {
+                        <tr>
+                            <td>@crop.Field?.FieldName ?? "N/A"</td>
+                            <td>@crop.Crop?.CropName ?? "N/A"</td>
+                            <td>@crop.Amount</td>
+                            <td>@crop.PlantDate.ToShortDateString()</td>
+                            <td>@crop.PlantDate.AddDays(crop.Crop?.DaysToGrow ?? 0).ToShortDateString()</td>
+                            <td>@((crop.PlantDate.AddDays(crop.Crop?.DaysToGrow ?? 0) - DateTime.Now).Days) days</td>
+                            <td>
+                                @if ((crop.PlantDate.AddDays(crop.Crop?.DaysToGrow ?? 0) - DateTime.Now).Days <= 7)
+                                {
+                                    <span class="alert-message">Ready soon!</span>
+                                }
+                                else
+                                {
+                                    <span>Not yet</span>
+                                }
+                            </td>
+                            <td>
+                                <form asp-action="RemoveCrop" method="post">
+                                    <input type="hidden" name="PlantedCropId" value="@crop.PlantedCropId" />
+                                    <button type="submit">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8">No tracked crops available.</td>
+                    </tr>
+                }
+         
             </tbody>
         </table>
     </section>
