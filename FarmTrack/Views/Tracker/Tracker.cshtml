@@ -153,6 +153,7 @@
     </div>
 
     <section class="tracker-table-section">
+        <h2>Tracked Crops</h2>
         <table>
             <thead>
                 <tr>
@@ -166,6 +167,41 @@
                     <th>Remove</th>
                 </tr>
             </thead>
+            <tbody>
+                @foreach (var plantedCrop in Model.trackedCrops)
+                {
+                    <tr>
+                        <td>@plantedCrop.Field?.FieldName</td>
+                        <td>@plantedCrop.Crop?.CropName</td>
+                        <td>@plantedCrop.Amount</td>
+                        <td>@plantedCrop.PlantDate.ToShortDateString()</td>
+                        <td>@plantedCrop.HarvestDate?.ToShortDateString()</td>
+                        <td>
+                            @if (plantedCrop.HarvestDate != null)
+                            {
+                                var daysLeft = (plantedCrop.HarvestDate.Value - DateTime.Now).Days;
+                                <span>@daysLeft days left</span> <!-- Time left -->
+                            }
+                        </td>
+                        <td>
+                            @if (plantedCrop.Alerts.Any(a => a.Dismissed == 0))
+                            {
+                                <span>Active</span> <!-- Harvest alert -->
+                            }
+                            else
+                            {
+                                <span>None</span>
+                            }
+                        </td>
+                        <td>
+                            <form method="post" action="@Url.Action("RemoveCrop", "Tracker")">
+                                <input type="hidden" name="cropId" value="@plantedCrop.PlantedCropId" />
+                                <button type="submit">Remove</button>
+                            </form>
+                        </td> <!-- Remove button -->
+                    </tr>
+                }
+            </tbody>
             <tbody id="farm-data-table">
 
                 <!-- New rows will be added here -->

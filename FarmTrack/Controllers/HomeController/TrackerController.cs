@@ -1,6 +1,7 @@
 ﻿using FarmTrack.Models;
 using FarmTrack.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
@@ -42,10 +43,18 @@ namespace FarmTrack.Controllers.HomeController
 
         public IActionResult Tracker()
         {
+            // Hämta alla PlantedCrops där grödan inte är "No planted crop" och där dismissed == 0
+            var trackedCrops = _context.PlantedCrops
+                .Include(pc => pc.Crop)   // Ladda relaterade Crop-objekt
+                .Include(pc => pc.Field)   // Ladda relaterade Field-objekt
+                .Where(pc => pc.Crop.CropName != "No planted crop" && pc.Alerts.Any(a => a.Dismissed == 0)) // Filtrera baserat på dina villkor
+                .ToList();
+
             var trackerViewModel = new TrackerViewModel
             {
                 cropList = _context.Crop.ToList(),
-                fieldList = _context.Fields.ToList()
+                fieldList = _context.Fields.ToList(),
+                trackedCrops = trackedCrops
             };
 
             return View(trackerViewModel);

@@ -1,6 +1,10 @@
-﻿@{
+﻿@model List<FarmTrack.Models.Entities.PlantedCrop>
+
+@{
     ViewData["Title"] = "Analysis";
 }
+
+
 <div class="analysis-content">
     <section class="analysis-table-section">
         <table>
@@ -13,8 +17,19 @@
                     <th>Harvest date</th>
                 </tr>
             </thead>
-            <tbody id="farm-data-table">
-                <!-- New rows will be added here -->
+            <tbody>
+            <tbody>
+                    @foreach (var plantedCrop in Model)
+                    {
+                    <tr>
+                        <td>@plantedCrop.Field?.FieldName</td> <!-- Förutsätter att Field har en FieldName -->
+                        <td>@plantedCrop.Crop?.CropName</td> <!-- Förutsätter att Crop har en CropName -->
+                        <td>@plantedCrop.Amount</td> <!-- Förutsätter att Amount finns -->
+                        <td>@plantedCrop.PlantDate.ToShortDateString()</td> <!-- Visar PlantDate -->
+                    </tr>
+                    }
+            </tbody>
+
             </tbody>
         </table>
     </section>
