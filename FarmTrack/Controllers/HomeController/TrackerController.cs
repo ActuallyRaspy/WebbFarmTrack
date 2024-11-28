@@ -119,7 +119,7 @@ namespace FarmTrack.Controllers.HomeController
                     plantedCrop.Harvested = 0;
 
                     _context.Alerts.Add(plantedCropAlert);
-                    _context.PlantedCrop.Add(plantedCrop);
+                    _context.PlantedCrops.Add(plantedCrop);
                     
                     
                     _context.SaveChanges();

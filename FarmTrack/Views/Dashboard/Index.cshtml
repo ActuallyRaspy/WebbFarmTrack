@@ -4,7 +4,9 @@
     ViewData["Title"] = "Dashboard";
     var user = Context.Session.GetObject<User>("CurrentUser") ?? new User();
     ViewData["SessionUsername"] = user.Username;
+
 }
 <h1>Welcome, @ViewData["SessionUsername"]</h1>
 
- 
+    <h2>API Data</h2>
+    <h3>Temperature at noon tomorrow: @ViewData["TemperatureAtNoon"]</h3>
