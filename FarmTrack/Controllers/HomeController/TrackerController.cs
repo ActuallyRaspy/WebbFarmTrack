@@ -1,6 +1,7 @@
 ﻿using FarmTrack.Models;
 using FarmTrack.Models.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.Text.Encodings.Web;
@@ -45,7 +46,12 @@ namespace FarmTrack.Controllers.HomeController
             var trackerViewModel = new TrackerViewModel
             {
                 cropList = _context.Crop.ToList(),
-                fieldList = _context.Fields.ToList()
+                fieldList = _context.Fields.ToList(),
+                plantedCrops = _context.PlantedCrops
+                .Include(pc => pc.Crop)
+                .Include(pc => pc.Field)
+                .Where(pc => pc.Harvested == 0)
+                .ToList()
             };
 
             return View(trackerViewModel);
@@ -133,7 +139,17 @@ namespace FarmTrack.Controllers.HomeController
             ViewBag.Error = "Error occurred.";
             return View("Tracker");
         }
-
+        [HttpPost]
+        public IActionResult RemoveCrop(int PlantedCropId)
+        {
+            var crop = _context.PlantedCrops.FirstOrDefault(pc => pc.PlantedCropId == PlantedCropId);
+            if (crop != null)
+            {
+                crop.Harvested = 1;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Tracker");
+        }
         //public int PlantedCropId { get; set; }
         //public DateTime PlantDate { get; set; }
         //public int Harvested { get; set; } // 0 if not yet harvested, 1 if harvested.

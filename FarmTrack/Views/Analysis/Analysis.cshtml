@@ -1,20 +1,41 @@
-﻿@{
+﻿@model List<FarmTrack.Models.Entities.PlantedCrop>
+
+@{
     ViewData["Title"] = "Analysis";
 }
+
 <div class="analysis-content">
     <section class="analysis-table-section">
-        <table>
+        <table class="analysis-table">
             <thead>
                 <tr>
                     <th>Farm</th>
                     <th>Crop</th>
                     <th>Amount</th>
-                    <th>Plant date</th>
-                    <th>Harvest date</th>
+                    <th>Plant Date</th>
+                    <th>Harvest Date</th>
                 </tr>
             </thead>
-            <tbody id="farm-data-table">
-                <!-- New rows will be added here -->
+            <tbody>
+                @if (Model.Any())
+                {
+                    foreach (var plantedCrop in Model)
+                    {
+                        <tr>
+                            <td>@plantedCrop.Field.FieldName</td>
+                            <td>@plantedCrop.Crop.CropName</td>
+                            <td>@plantedCrop.Amount</td>
+                            <td>@plantedCrop.PlantDate.ToShortDateString()</td>
+                            <td>@plantedCrop.PlantDate.AddDays(plantedCrop.Crop.DaysToGrow).ToShortDateString()</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5">No crops have been planted yet.</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </section>
