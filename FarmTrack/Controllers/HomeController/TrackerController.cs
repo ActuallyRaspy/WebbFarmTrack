@@ -145,7 +145,7 @@ namespace FarmTrack.Controllers.HomeController
             var crop = _context.PlantedCrops.FirstOrDefault(pc => pc.PlantedCropId == PlantedCropId);
             if (crop != null)
             {
-                _context.PlantedCrops.Remove(crop);
+                crop.Harvested = 1;
                 _context.SaveChanges();
             }
             return RedirectToAction("Tracker");

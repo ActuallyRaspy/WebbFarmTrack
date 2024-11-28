@@ -180,14 +180,14 @@
                     foreach (var crop in Model.plantedCrops)
                     {
                         <tr>
-                            <td>@crop.Field?.FieldName ?? "N/A"</td>
-                            <td>@crop.Crop?.CropName ?? "N/A"</td>
+                            <td>@crop.Field.FieldName</td>
+                            <td>@crop.Crop.CropName</td>
                             <td>@crop.Amount</td>
                             <td>@crop.PlantDate.ToShortDateString()</td>
-                            <td>@crop.PlantDate.AddDays(crop.Crop?.DaysToGrow ?? 0).ToShortDateString()</td>
-                            <td>@((crop.PlantDate.AddDays(crop.Crop?.DaysToGrow ?? 0) - DateTime.Now).Days) days</td>
+                            <td>@crop.PlantDate.AddDays(crop.Crop.DaysToGrow).ToShortDateString()</td>
+                            <td>@((crop.PlantDate.AddDays(crop.Crop.DaysToGrow) - DateTime.Now).Days) days</td>
                             <td>
-                                @if ((crop.PlantDate.AddDays(crop.Crop?.DaysToGrow ?? 0) - DateTime.Now).Days <= 7)
+                                @if ((crop.PlantDate.AddDays(crop.Crop.DaysToGrow) - DateTime.Now).Days <= 7)
                                 {
                                     <span class="alert-message">Ready soon!</span>
                                 }

@@ -22,11 +22,11 @@
                     foreach (var plantedCrop in Model)
                     {
                         <tr>
-                            <td>@plantedCrop.Field?.FieldName ?? "N/A"</td>
-                            <td>@plantedCrop.Crop?.CropName ?? "N/A"</td>
+                            <td>@plantedCrop.Field.FieldName</td>
+                            <td>@plantedCrop.Crop.CropName</td>
                             <td>@plantedCrop.Amount</td>
                             <td>@plantedCrop.PlantDate.ToShortDateString()</td>
-                            <td>@plantedCrop.PlantDate.AddDays(plantedCrop.Crop?.DaysToGrow ?? 0).ToShortDateString()</td>
+                            <td>@plantedCrop.PlantDate.AddDays(plantedCrop.Crop.DaysToGrow).ToShortDateString()</td>
                         </tr>
                     }
                 }
