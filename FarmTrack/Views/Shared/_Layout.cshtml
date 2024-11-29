@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using FarmTrack.Models.Entities;
+@{
+    var user = Context.Session.GetObject<User>("CurrentUser") ?? new User();
+    ViewData["SessionUsername"] = user.Username;
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -24,8 +30,8 @@
         <div class="user-section">
             <img src="https://via.placeholder.com/40" alt="User" class="user-icon">
             <div class="user-details">
-                <span class="user-name">Användare</span>
-                <a href="#" class="logout-button">Log out</a>
+                <span class="user-name">@ViewData["SessionUsername"]</span>
+                
             </div>
         </div>
     </header>
