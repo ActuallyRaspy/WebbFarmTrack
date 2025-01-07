@@ -216,6 +216,7 @@ body {
     gap: 20px;                    /* Lägg till mellanrum mellan form och tabell */
 }
 
+
 .tracker-form-wrapper{
     display:flex;
     flex-direction: column;
@@ -426,4 +427,52 @@ body {
 #register-page-btn{
     margin-left: 0;
     width: 100px;
+}
+
+@media only screen and (max-width: 800px) {
+    .tracker-content {
+        flex-direction: column;
+    }
+
+    .farmtrack-header .title {
+        display: none;
+    }
+
+    .farmtrack-header {
+        font-size: small;
+    }
+    .farmtrack-header img{
+        margin-right: 10px;
+        z-index: 1;
+    }
+
+    .title{
+        padding: 0;
+    }
+
+    .user-details span{
+        display:none;
+    }
+
+    .tracker-table-section{
+        width: 633px;
+        margin-left: 15px;
+        margin-bottom:30px;
+    }
+
+    .tracker-form-section{
+        width: 600px;
+    }
+
+    .analysis-table-section{
+        width: 600px;
+    }
+
+    .user-section img {
+        display: none;
+    }
+
+    .main-menu ul {
+        grid-template-columns: repeat(4, 100px);
+    }
 }

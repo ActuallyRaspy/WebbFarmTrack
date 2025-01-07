@@ -175,7 +175,8 @@
             </thead>
             <tbody id="farm-data-table">
 
-                @if (Model.plantedCrops != null && Model.plantedCrops.Any())
+                @if (Model == null) return; 
+                else if (Model.plantedCrops != null)
                 {
                     foreach (var crop in Model.plantedCrops)
                     {
